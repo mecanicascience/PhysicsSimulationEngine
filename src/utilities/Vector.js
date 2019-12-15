@@ -155,6 +155,7 @@ class Vector {
     		this.div(m).mult(min);
     	if(m > max)
     		this.div(m).mult(max);
+    	return this;
     }
 
 
