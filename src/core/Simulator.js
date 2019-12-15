@@ -8,13 +8,17 @@ class pSimulator {
         this.config.engine  = this.getDefaultEngineConfig();
         this.config.custom  = {};
 
+        window.getCustomConfig = this.getCustomConfig;
+        window.getEngineConfig = this.getEngineConfig;
+    }
+
+
+    /** Instanciate the pSimulator */
+    instanciate() {
         this.createP5Instance();
         this.plotter = new pSPlotter(this, new pSDrawer());
 
         window.runSimulator(this); // start is the main function
-
-        window.getCustomConfig = this.getCustomConfig();
-        window.getEngineConfig = this.getEngineConfig();
     }
 
 
@@ -164,13 +168,13 @@ class pSimulator {
     * @return the engine configuration
     */
     getEngineConfig() {
-        return this.config.engine;
+        return window._pSimulationInstance.config.engine;
     }
 
     /**
     * @return the custom configuration
     */
     getCustomConfig() {
-        return this.config.custom;
+        return window._pSimulationInstance.config.custom;
     }
 }

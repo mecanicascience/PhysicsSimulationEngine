@@ -9,6 +9,7 @@ class pSEngine {
 		// uses the p5 functions
 		window.setup = function() {
 			window._pSimulationInstance = new pSimulator();
+			window._pSimulationInstance.instanciate();
 		};
 	}
 }
