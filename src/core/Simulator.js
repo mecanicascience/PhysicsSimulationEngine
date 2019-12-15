@@ -152,6 +152,7 @@ class pSimulator {
     */
     setEngineConfig(configFunc) {
         configFunc(this.config.engine);
+        window.windowResized(); // if proportions changed
         return this;
     }
 
