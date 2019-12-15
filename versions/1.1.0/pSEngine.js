@@ -442,6 +442,10 @@ class Vector {
         return this;
     }
 
+    static dist(v1, v2) {
+    	return Vector.sub(v1, v2).mag();
+    }
+
     setMag(c) {
         return this.normalize().mult(c);
     }
