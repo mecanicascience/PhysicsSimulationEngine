@@ -368,11 +368,19 @@ class Vector {
         return this;
     }
 
+    static add(v1, v2) {
+    	return new Vector(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+    }
+
     sub(x, y, z) {
         if(x instanceof Vector)
             return this.add(x.mult(-1));
 
         return this.add(-x, -y, -z);
+    }
+
+    static sub(v1, v2) {
+    	return new Vector(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
     }
 
     mult(c) {
