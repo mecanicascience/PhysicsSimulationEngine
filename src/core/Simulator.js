@@ -12,6 +12,9 @@ class pSimulator {
         this.plotter = new pSPlotter(this, new pSDrawer());
 
         window.runSimulator(this); // start is the main function
+
+        window.getCustomConfig = this.getCustomConfig();
+        window.getEngineConfig = this.getEngineConfig();
     }
 
 
@@ -155,5 +158,19 @@ class pSimulator {
     setCustomConfig(configFunc) {
         configFunc(this.config.custom);
         return this;
+    }
+
+    /**
+    * @return the engine configuration
+    */
+    getEngineConfig() {
+        return this.config.engine;
+    }
+
+    /**
+    * @return the custom configuration
+    */
+    getCustomConfig() {
+        return this.config.custom;
     }
 }
