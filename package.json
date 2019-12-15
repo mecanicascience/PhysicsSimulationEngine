@@ -1,10 +1,10 @@
 {
-  "name": "simulationengine",
-  "version": "0.0.1",
-  "description": "A Simulation Engine for Physics Simulations",
-  "main": "simulationEngine.js",
+  "name": "physics-simulation-engine",
+  "version": "0.1.0",
+  "description": "A Simulation Engine for Physics Simulation",
+  "main": "./build/pSEngine.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "grunt": "grunt"
   },
   "repository": {
     "type": "git",
@@ -17,8 +17,16 @@
   ],
   "author": "MecanicaScience <Made by xam4lor>",
   "license": "MIT",
+  "files": [
+    "build/pSEngine.js",
+    "build/pSEngine.min.js"
+  ],
   "bugs": {
     "url": "https://github.com/mecanicascience/SimulationEngine/issues"
   },
-  "homepage": "https://github.com/mecanicascience/SimulationEngine#readme"
+  "homepage": "https://github.com/mecanicascience/SimulationEngine#readme",
+  "devDependencies": {
+    "grunt": "^1.0.4",
+    "grunt-contrib-uglify-es": "^3.3.0"
+  }
 }
