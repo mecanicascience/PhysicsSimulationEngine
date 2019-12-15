@@ -1,0 +1,24 @@
+{
+  "name": "simulationengine",
+  "version": "0.0.1",
+  "description": "A Simulation Engine for Physics Simulations",
+  "main": "simulationEngine.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mecanicascience/SimulationEngine.git"
+  },
+  "keywords": [
+    "simulation",
+    "engine",
+    "physics"
+  ],
+  "author": "MecanicaScience <Made by xam4lor>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mecanicascience/SimulationEngine/issues"
+  },
+  "homepage": "https://github.com/mecanicascience/SimulationEngine#readme"
+}
