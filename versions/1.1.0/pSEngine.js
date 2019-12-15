@@ -283,7 +283,7 @@ class pSPlotter {
 
     update(dt) {
         for (let i = 0; i < this.objectsL.length; i++)
-            this.objectsL[i].update(dt, this.objectsL.slice(0).splice(i, 1));
+            this.objectsL[i].update(dt, this.objectsL);
     }
 
     draw() {
