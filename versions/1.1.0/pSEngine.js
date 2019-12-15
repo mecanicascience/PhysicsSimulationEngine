@@ -480,6 +480,14 @@ class Vector {
         return `Vector Object : [${this.x}, ${this.y}, ${this.z}]`;
     }
 
+    limit(min, max) {
+    	let m = this.mag();
+    	if(m < min)
+    		this.div(m).mult(min);
+    	if(m > max)
+    		this.div(m).mult(max);
+    }
+
 
     draw(originPosition, color, headSize, strokeW) {
         if(originPosition != undefined)
