@@ -4,7 +4,8 @@
   "description": "A Simulation Engine for Physics Simulation",
   "main": "./build/pSEngine.js",
   "scripts": {
-    "grunt": "grunt"
+    "build": "grunt build --dest=build/",
+    "watch": "grunt --dest=dev/instance/build/"
   },
   "repository": {
     "type": "git",
@@ -26,8 +27,12 @@
   },
   "homepage": "https://github.com/mecanicascience/SimulationEngine#readme",
   "devDependencies": {
+    "express": "^4.17.1",
     "grunt": "^1.0.4",
+    "grunt-concurrent": "^3.0.0",
     "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-uglify-es": "^3.3.0"
+    "grunt-contrib-uglify-es": "^3.3.0",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-nodemon": "^0.4.2"
   }
 }
