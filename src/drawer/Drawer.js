@@ -45,6 +45,11 @@ class pSDrawer {
         return this;
     }
 
+    strokeWeight(n) {
+        strokeWeight(n);
+        return this;
+    }
+
     fill(r, g, b, a) {
         if(a == undefined) {
             if(b == undefined) {

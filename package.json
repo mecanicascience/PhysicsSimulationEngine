@@ -5,7 +5,7 @@
   "main": "./build/pSEngine.js",
   "scripts": {
     "build": "grunt build --dest=build/",
-    "watch": "grunt --dest=dev/instance/build/"
+    "watch": "grunt --dest=dev/instance/lib/"
   },
   "repository": {
     "type": "git",

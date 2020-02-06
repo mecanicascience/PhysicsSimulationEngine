@@ -1,8 +1,14 @@
 class Vector {
-    constructor(x, y, z) {
-        this.x = x || 0;
-        this.y = y || 0;
-        this.z = z || 0;
+    constructor(x, y, z, text) {
+        this.x    = x || 0;
+        this.y    = y || 0;
+        this.z    = z || 0;
+
+        this.setText(text);
+        if(z != undefined && !(typeof z === 'number')) {
+            this.setText(z);
+            this.z = 0;
+        }
     }
 
     set(x, y, z) {
@@ -16,6 +22,18 @@ class Vector {
         this.x = x || 0;
         this.y = x || 0;
         this.z = x || 0;
+        return this;
+    }
+
+    setText(text) {
+        if(text == undefined)
+            return this;
+
+        if(text instanceof Text)
+            this.text = text;
+        else
+            this.text = new Text(text, new Vector(this.x, this.y));
+
         return this;
     }
 
@@ -161,12 +179,12 @@ class Vector {
 
     draw(originPosition, color, headSize, strokeW) {
         if(originPosition != undefined)
-            Vector.draw(originPosition, this, color, headSize, strokeW);
+            Vector.draw(this, originPosition, this, color, headSize, strokeW);
         else
-            Vector.draw(this);
+            Vector.draw(this, this);
     }
 
-    static draw(originPosition, endPosition, color = 'rgb(255, 255, 255)', headSize = 5, strokeW = 1) {
+    static draw(vector, originPosition, endPosition, color = 'rgb(255, 255, 255)', headSize = 5, strokeW = 1) {
         if((endPosition && endPosition.z != 0) || originPosition.z != 0)
             console.warn("Vector drawing is only implemented in 2D yet.");
         if(endPosition == undefined) {
@@ -192,6 +210,31 @@ class Vector {
                 triangle(0, headSize / 2, 0, -headSize / 2, headSize, 0);
             pop();
     	pop();
+
+        if(vector.text != undefined) {
+            let angle = vector.getAngle();
+            if(angle < 0)
+                angle += 2*PI;
+
+            let xOffset = 0.5 * vector.text.cWidth;
+            if(    (PI/4   < angle && angle <= PI/2  )
+                || (3*PI/4 < angle && angle <= 5*PI/4)
+                || (3*PI/2 < angle && angle <= 7*PI/4)
+            ) xOffset *= -1;
+
+            let yOffset = -vector.text.desc + vector.text.asc;
+            if(    (PI/4   < angle && angle <=   PI/2)
+                || (PI/2   < angle && angle <= 3*PI/4)
+                || (PI     < angle && angle <= 5*PI/4)
+                || (7*PI/4 < angle && angle <=   2*PI)
+            ) yOffset *= -1;
+
+            vector.text
+                .setPosition(vector.x / 2, vector.y / 2)
+                .setOffset(xOffset, yOffset)
+                .draw(_pSimulationInstance.plotter.drawer);
+        }
+
         return this;
     }
 }

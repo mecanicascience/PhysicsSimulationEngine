@@ -1,4 +1,5 @@
 *.DS_STORE
 node_modules/*
 build/*
-dev/instance/build/*
+dev/instance/lib/pSEngine.js
+dev/instance/lib/pSEngine.min.js
