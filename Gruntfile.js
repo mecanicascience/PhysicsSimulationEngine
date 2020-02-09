@@ -7,6 +7,8 @@ module.exports = function(grunt) {
 		concat: {
 			dist: {
 				src: [
+					'src/*/*/*/*',
+					'src/*/*/*',
 					'src/*/*',
 					'src/*'
 				],
@@ -32,6 +34,8 @@ module.exports = function(grunt) {
 		watch: {
 			scripts: {
 				files: [
+					'src/*/*/*/*',
+					'src/*/*/*',
 					'src/*/*',
 					'src/*'
 				],

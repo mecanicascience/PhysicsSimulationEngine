@@ -68,4 +68,9 @@ class Text {
         this.yOffset = y;
         return this;
     }
+
+    setColor(color) {
+        this.color = color;
+        return this;
+    }
 }

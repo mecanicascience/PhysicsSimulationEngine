@@ -1,13 +1,13 @@
 class SObject {
-    constructor(x0, y0, name) {
-        this.pos = new Vector(x0, y0, name);
+    constructor(x0, y0, positionName, vectorName) {
+        this.point = new Point(x0, y0, "red", positionName, undefined, vectorName);
     }
 
     update(dt, everyObjects) {
-        this.pos.rotate(0.01);
+        this.point.pos.rotate(0.01);
     }
 
     draw(drawer) {
-        this.pos.draw();
+        this.point.draw(drawer, false);
     }
 }
