@@ -13,7 +13,9 @@ class Point {
 
     update() {}
 
-    draw(drawer) {
+    draw() {
+        let drawer = _pSimulationInstance.plotter.drawer;
+
         // POINT LOCATION
         drawer
             .fill(this.pos.color)

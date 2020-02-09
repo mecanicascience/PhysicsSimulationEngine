@@ -14,8 +14,9 @@ class Text {
     }
 
 
-    draw(drawer) {
-        let pos = drawer.plotter.computeForXY(this.pos.x, this.pos.y);
+    draw() {
+        let drawer = _pSimulationInstance.plotter.drawer;
+        let pos    = drawer.plotter.computeForXY(this.pos.x, this.pos.y);
 
         push();
             textSize(this.textSize);
