@@ -26,9 +26,9 @@ class Point {
         if(this.pointName == undefined)
             return;
 
-        this.pointName.pos = (this.pos.copy()).add(0, this.pointSize / 19);
+        this.pointName.pos = (this.pos.copy()).add(0, 0.4);
         if(this.pos.text != undefined && this.drawOriginVector && this.pos.y < 0)
-            this.pointName.pos = (this.pos.copy()).add(0, -this.pointSize / 19);
+            this.pointName.pos = (this.pos.copy()).add(0, -0.4);
 
         this.pointName.draw(drawer);
     }
