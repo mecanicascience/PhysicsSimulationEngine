@@ -13,7 +13,9 @@ class Point {
 
     update() {}
 
-    draw(drawer) {
+    draw() {
+        let drawer = _pSimulationInstance.plotter.drawer;
+
         // POINT LOCATION
         drawer
             .fill(this.pos.color)
@@ -52,8 +54,9 @@ class Text {
     }
 
 
-    draw(drawer) {
-        let pos = drawer.plotter.computeForXY(this.pos.x, this.pos.y);
+    draw() {
+        let drawer = _pSimulationInstance.plotter.drawer;
+        let pos    = drawer.plotter.computeForXY(this.pos.x, this.pos.y);
 
         push();
             textSize(this.textSize);
@@ -635,75 +638,81 @@ class Vector {
     }
 
     static draw(vector, color = 'rgb(255, 255, 255)', originPosition, endPosition, headSize = 5, strokeW = 1) {
-        if((endPosition && endPosition.z != 0) || originPosition.z != 0)
-            console.warn("Vector drawing is only implemented in 2D yet.");
-        if(endPosition == undefined) {
+        push();
+            if(endPosition != undefined) {
+                let p = _pSimulationInstance.plotter.computeForXY(originPosition.x, originPosition.y);
+                translate(p.x - width / 2, p.y - height / 2);
+            }
+
+            if((endPosition && endPosition.z != 0) || originPosition.z != 0)
+                console.warn("Vector drawing is only implemented in 2D yet.");
+
             let c = originPosition.copy();
             endPosition = c.copy();
             originPosition = c.clear();
-        }
 
-        let originPos = _pSimulationInstance.plotter.computeForXY(originPosition.x, originPosition.y);
-        let endPos    = _pSimulationInstance.plotter.computeForXY(endPosition.x   , endPosition.y);
+            let originPos = _pSimulationInstance.plotter.computeForXY(originPosition.x, originPosition.y);
+            let endPos    = _pSimulationInstance.plotter.computeForXY(endPosition.x   , endPosition.y);
 
-        push();
-            stroke(color);
-            strokeWeight(strokeW);
-            fill(color);
-
-            line(originPos.x, originPos.y, endPos.x, endPos.y);
-            translate(endPos.x, endPos.y);
-
-            push();
-                rotate(endPos.sub(originPos).getAngle());
-                translate(-headSize - 2, 0);
-                triangle(0, headSize / 2, 0, -headSize / 2, headSize, 0);
-            pop();
-    	pop();
-
-        if(vector.text != undefined) {
-            // TEXT
-            let angle = vector.getAngle();
-            if(angle < 0)
-                angle += 2*PI;
-
-            let xOffset = 0.8 * vector.text.cWidth;
-            if(    (PI/4   < angle && angle <= PI/2  )
-                || (3*PI/4 < angle && angle <= 5*PI/4)
-                || (3*PI/2 < angle && angle <= 7*PI/4)
-            ) xOffset *= -1;
-
-            let yOffset = -1.1 * vector.text.desc + 1.1 * vector.text.asc;
-            if(    (PI/4   < angle && angle <=   PI/2)
-                || (PI/2   < angle && angle <= 3*PI/4)
-                || (PI     < angle && angle <= 5*PI/4)
-                || (7*PI/4 < angle && angle <=   2*PI)
-            ) yOffset *= -1;
-
-            vector.text
-                .setColor(color)
-                .setPosition(vector.x / 2, vector.y / 2)
-                .setOffset(xOffset, yOffset)
-                .draw(_pSimulationInstance.plotter.drawer);
-
-
-            // ARROW ON TOP
-            let originPos2 = _pSimulationInstance.plotter.computeForXY(vector.x / 2, vector.y / 2);
             push();
                 stroke(color);
                 strokeWeight(strokeW);
                 fill(color);
 
-                translate(0, 0);
-                translate(originPos2.x + xOffset - vector.text.cWidth / 2, originPos2.y + yOffset - vector.text.asc);
-                line(0, 0, vector.text.cWidth, 0);
+                line(originPos.x, originPos.y, endPos.x, endPos.y);
+                translate(endPos.x, endPos.y);
 
                 push();
-                    translate(headSize + vector.text.cWidth / 2 - 1, 0);
-                    triangle(0, headSize / 4, 0, -headSize / 4, headSize / 2, 0);
+                    rotate(endPos.sub(originPos).getAngle());
+                    translate(-headSize - 2, 0);
+                    triangle(0, headSize / 2, 0, -headSize / 2, headSize, 0);
                 pop();
         	pop();
-        }
+
+            if(vector.text != undefined) {
+                // TEXT
+                let angle = vector.getAngle();
+                if(angle < 0)
+                    angle += 2*PI;
+
+                let xOffset = 0.8 * vector.text.cWidth;
+                if(    (PI/4   < angle && angle <= PI/2  )
+                    || (3*PI/4 < angle && angle <= 5*PI/4)
+                    || (3*PI/2 < angle && angle <= 7*PI/4)
+                ) xOffset *= -1;
+
+                let yOffset = -1.1 * vector.text.desc + 1.1 * vector.text.asc;
+                if(    (PI/4   < angle && angle <=   PI/2)
+                    || (PI/2   < angle && angle <= 3*PI/4)
+                    || (PI     < angle && angle <= 5*PI/4)
+                    || (7*PI/4 < angle && angle <=   2*PI)
+                ) yOffset *= -1;
+
+                vector.text
+                    .setColor(color)
+                    .setPosition(vector.x / 2, vector.y / 2)
+                    .setOffset(xOffset, yOffset)
+                    .draw(_pSimulationInstance.plotter.drawer);
+
+
+                // ARROW ON TOP
+                let originPos2 = _pSimulationInstance.plotter.computeForXY(vector.x / 2, vector.y / 2);
+                push();
+                    stroke(color);
+                    strokeWeight(strokeW);
+                    fill(color);
+
+                    translate(0, 0);
+                    translate(originPos2.x + xOffset - vector.text.cWidth / 2, originPos2.y + yOffset - vector.text.asc);
+                    line(0, 0, vector.text.cWidth, 0);
+
+                    push();
+                        translate(headSize + vector.text.cWidth / 2 - 1, 0);
+                        triangle(0, headSize / 4, 0, -headSize / 4, headSize / 2, 0);
+                    pop();
+            	pop();
+            }
+        pop();
 
         return this;
     }
