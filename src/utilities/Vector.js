@@ -177,15 +177,15 @@ class Vector {
 
     draw(originPosition, headSize, strokeW) {
         if(originPosition != undefined)
-            Vector.draw(this, this.color, originPosition, this, headSize, strokeW);
+            Vector.draw(this, this.color, this, originPosition, headSize, strokeW);
         else
             Vector.draw(this, this.color, this);
     }
 
-    static draw(vector, color = 'rgb(255, 255, 255)', originPosition, endPosition, headSize = 5, strokeW = 1) {
+    static draw(vector, color = 'rgb(255, 255, 255)', originPosition, originPosition1, headSize = 5, strokeW = 1, endPosition) {
         push();
-            if(endPosition != undefined) {
-                let p = _pSimulationInstance.plotter.computeForXY(originPosition.x, originPosition.y);
+            if(originPosition1 != undefined) {
+                let p = _pSimulationInstance.plotter.computeForXY(originPosition1.x, originPosition1.y);
                 translate(p.x - width / 2, p.y - height / 2);
             }
 
