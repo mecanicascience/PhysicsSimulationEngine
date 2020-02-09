@@ -7,6 +7,8 @@ class Point {
 
         this.drawOriginVector = drawOriginVector;
         this.pointSize        = pointSize;
+
+        this.textPadding = 0.4;
     }
 
     update() {}
@@ -26,9 +28,9 @@ class Point {
         if(this.pointName == undefined)
             return;
 
-        this.pointName.pos = (this.pos.copy()).add(0, 0.4);
+        this.pointName.pos = (this.pos.copy()).add(0, this.textPadding);
         if(this.pos.text != undefined && this.drawOriginVector && this.pos.y < 0)
-            this.pointName.pos = (this.pos.copy()).add(0, -0.4);
+            this.pointName.pos = (this.pos.copy()).add(0, -this.textPadding);
 
         this.pointName.draw(drawer);
     }
