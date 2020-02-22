@@ -1,4 +1,16 @@
+/**
+* A class for every 3D Vectors.
+* <br/>Please note that current vector may only be used in <b>2D</b>.
+*/
 class Vector {
+    /**
+    * Creates a new Vector (each coordinate gets a 0 if value not provided)
+    * @param x X coordinate
+    * @param y Y coordinate
+    * @param color Color of the Vector 'rgba(R, G, B, A)'
+    * @param name Name of the Vector to be potentially displayed (@see draw method)
+    * @return this
+    */
     constructor(x, y, color = 'rgb(255, 255, 255)', name) {
         this.x    = x || 0;
         this.y    = y || 0;
@@ -12,6 +24,13 @@ class Vector {
 
 
     /* ========= BASIC VECTOR METHODS ========= */
+    /**
+    * Set x, y, z coordinates (each coordinate gets a 0 if value not provided)
+    * @param x New X coordinate OR a Vector x to be equal to
+    * @param y New Y coordinate
+    * @param z New Z coordinate
+    * @return this
+    */
     set(x, y, z) {
         if(x instanceof Vector) {
             this.x = x.x || 0;
@@ -26,6 +45,11 @@ class Vector {
         return this;
     }
 
+    /**
+    * Set vector name
+    * @param name New name of the Vector
+    * @return this
+    */
     setName(name) {
         if(name == undefined)
             return this;
@@ -38,7 +62,13 @@ class Vector {
         return this;
     }
 
-
+    /**
+    * Check if two vectors or pair of coordinates are equal
+    * @param x X coordinate OR a Vector x for egality checking
+    * @param y Y coordinate
+    * @param z Z coordinate
+    * @return true if equal
+    */
     equals(x, y, z) {
         if(x instanceof Vector)
             return this.equals(x.x, x.y, x.z);
@@ -46,11 +76,13 @@ class Vector {
         return (this.x == x) && (this.y == y) && (this.z == z);
     }
 
-
+    /** @return a copy of the current Vector */
     copy() { return new Vector(this.x, this.y, this.z); }
 
+    /** @return this Vector with coordinates set to (0, 0, 0) */
     clear() { return this.set(0, 0, 0); }
 
+    /** @return A String representation of the object */
     toString() { return `Vector Object : [${this.x}, ${this.y}, ${this.z}]`; }
     /* ======================================== */
 
@@ -59,6 +91,13 @@ class Vector {
 
 
     /* ========= BASIC VECTOR OPERATIONS ========= */
+    /**
+    * Add two vectors or pair of coordinates together
+    * @param x X coordinate OR a Vector x
+    * @param y Y coordinate
+    * @param z Z coordinate
+    * @return this
+    */
     add(x, y, z) {
         if(x instanceof Vector) {
             this.x += x.x || 0;
@@ -73,7 +112,13 @@ class Vector {
         return this;
     }
 
-
+    /**
+    * Sustract two vectors or pair of coordinates together
+    * @param x X coordinate OR a Vector x
+    * @param y Y coordinate
+    * @param z Z coordinate
+    * @return this
+    */
     sub(x, y, z) {
         if(x instanceof Vector)
             return this.add(x.mult(-1));
@@ -81,7 +126,11 @@ class Vector {
         return this.add(-x, -y, -z);
     }
 
-
+    /**
+    * Multiply this Vector by a scalar
+    * @param c The multiplication scalar
+    * @return this
+    */
     mult(c) {
         if(!(typeof c === 'number') || !isFinite(c)) {
             console.warn(
@@ -97,7 +146,11 @@ class Vector {
         return this;
     }
 
-
+    /**
+    * Divides this Vector by a scalar
+    * @param c The division scalar
+    * @return this
+    */
     div(c) {
         if(!(typeof c === 'number') || !isFinite(c)) {
             console.warn(
@@ -115,11 +168,39 @@ class Vector {
     }
 
 
+
     // Static methods
-    static add (v1, v2) { return (v1.copy()).add(v2); }
-    static sub (v1, v2) { return (v1.copy()).sub(v2); }
-    static mult(v1, c ) { return (v1.copy()).mult(c); }
-    static div (v1, c ) { return (v1.copy()).div (c); }
+    /**
+    * Add two vectors together
+    * @param v1 The first vector
+    * @param v2 The second vector
+    * @return A new Vector
+    */
+    static add(v1, v2) { return (v1.copy()).add(v2); }
+
+    /**
+    * Subtract two vectors together
+    * @param v1 The first vector
+    * @param v2 The second vector
+    * @return A new Vector
+    */
+    static sub(v1, v2) { return (v1.copy()).sub(v2); }
+
+    /**
+    * Multiply a vector by a scalar
+    * @param v1 The vector
+    * @param c A scalar c
+    * @return A new multiplied Vector
+    */
+    static mult(v1, c) { return (v1.copy()).mult(c); }
+
+    /**
+    * Divides two vectors together
+    * @param v1 The vector
+    * @param c A scalar c
+    * @return A new divided Vector
+    */
+    static div (v1, c) { return (v1.copy()).div(c); }
     /* =========================================== */
 
 
@@ -128,6 +209,13 @@ class Vector {
 
     /* ========= ADVANCED MATH VECTOR OPERATIONS ========= */
     // Dot and cross products
+    /**
+    * Dot product between a Vector OR a pair of coordinates
+    * @param x X coordinate OR a Vector x
+    * @param y Y coordinate
+    * @param z Z coordinate
+    * @return this
+    */
     dot(x, y, z) {
         if(x instanceof Vector)
             return this.dot(x.x, x.y, x.z);
@@ -135,6 +223,11 @@ class Vector {
         return this.x * (x || 0) + this.y * (y || 0) + this.z * (z || 0);
     }
 
+    /**
+    * Cross product with a Vector
+    * @param v The vector
+    * @return this
+    */
     cross(v) {
         return new Vector(
             this.y * v.z - this.z * v.y,
@@ -146,15 +239,21 @@ class Vector {
 
 
     // Magnitude
+    /** @return the normalized Vector */
     normalize() {
         const vLen = this.mag();
-
         if (vLen !== 0)
             this.div(vLen);
 
         return this;
     }
 
+    /**
+    * Limit the magnitude of the vector between a min and a max value
+    * @param min Minimum value of the Vector magnitude
+    * @param max Maximum value of the Vector magnitude
+    * @return this
+    */
     limit(min, max) {
     	let m = this.mag();
     	if(m < min)
@@ -164,12 +263,24 @@ class Vector {
     	return this;
     }
 
-    mag()     { return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z); }
-    setMag(c) { return this.normalize().mult(c); }
+    /** @return the magnitude of this vector */
+    mag() { return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z); }
+
+    /**
+    * Set the magnitude of this vector
+    * @param mag The new magnitude
+    * @return this
+    */
+    setMag(mag) { return this.normalize().mult(mag); }
 
 
 
     // Angles
+    /**
+    * Rotate this vector by an angle
+    * @param angle An angle IN RADIANS
+    * @return this
+    */
     rotate(angle) {
         const newAngle  = this.getAngle() + angle;
         const magnitude = this.mag();
@@ -180,17 +291,48 @@ class Vector {
         return this;
     }
 
+    /** @return the angle between this vector and the origin */
     getAngle() { return Math.atan2(this.y, this.x); }
 
 
 
     // Static methods
+    /**
+    * Distance bewteen two vectors
+    * @param v1 The first vector
+    * @param v2 The second vector
+    * @return the distance between the two positions where the arrow are pointing to
+    */
     static dist(v1, v2) { return Vector.sub(v1, v2).mag(); }
 
-    static dot      (v1, x, y, z) { return (v1.copy()).dot(x, y, z);  }
-    static cross    (v1, v2)      { return (v1.copy()).cross(v2);     }
-    static normalize(v1)          { return (v1.copy()).normalize();   }
-    static rotate   (v1, angle)   { return (v1.copy()).rotate(angle); }
+    /**
+    * Dot product between a Vector OR a pair of coordinates
+    * @param v1 The first vector
+    * @param x X coordinate OR a Vector x
+    * @param y Y coordinate
+    * @param z Z coordinate
+    * @return the dotted new vector
+    */
+    static dot(v1, x, y, z) { return (v1.copy()).dot(x, y, z); }
+
+    /**
+    * Cross product with a Vector
+    * @param v1 The first vector
+    * @param v2 The second vector
+    * @return the crossed new vector
+    */
+    static cross(v1, v2) { return (v1.copy()).cross(v2); }
+
+    /** @return the normalized Vector */
+    static normalize(v1) { return (v1.copy()).normalize(); }
+
+    /**
+    * Rotate a vector by an angle
+    * @param v1 The vector to be rotated
+    * @param angle An angle IN RADIANS
+    * @return the rotated vector
+    */
+    static rotate (v1, angle) { return (v1.copy()).rotate(angle); }
     /* =================================================== */
 
 
@@ -198,88 +340,104 @@ class Vector {
 
 
     /* ========= DRAWING VECTORS ========= */
-    draw(originPosition, headSize, strokeW) {
-        if(originPosition != undefined)
-            Vector.draw(this, this.color, this, originPosition, headSize, strokeW);
+    /**
+    * Draw a vector to the canvas using the `Drawer` class
+    * @param initialPos The beginning position of the Vector Arrow
+    * @param headSize Size of the head in pixels (default = 5 px)
+    * @param strokeWeight Stroke weight of the Vector in pixels (default = 1 px)
+    */
+    draw(initialPos, headSize, strokeWeight) {
+        if(initialPos != undefined)
+            Vector.draw(initialPos, this, this.color, headSize, strokeWeight);
         else
-            Vector.draw(this, this.color, this);
+            Vector.draw(undefined , this, this.color);
     }
 
+    /**
+    * (Please avoid directly using this method)
+    * Draw a vector to the canvas using the `Drawer` class
+    * @param initialPos The beginning position of the Vector Arrow
+    * @param initialPos The ending position of the Vector Arrow
+    * @param color Color of the arrow (default `rgb(255, 255, 255)`)
+    * @param headSize Size of the head in pixels (default = 5 px)
+    * @param strokeWeight Stroke weight of the Vector in pixels (default = 1 px)
+    */
+    static draw(initialPos, pointingPos, color = 'rgb(255, 255, 255)', headSize = 5, strokeW = 1) {
+        if((initialPos != undefined && initialPos.z != 0) || pointingPos.z != 0)
+            console.warn("Vector drawing is only implemented in 2D yet.");
 
-    static draw(vector, color = 'rgb(255, 255, 255)', originPosition, originPosition1, headSize = 5, strokeW = 1, endPosition) {
+        let plotter = _pSimulationInstance.plotter;
+
         push();
-            if(originPosition1 != undefined) {
-                let p = _pSimulationInstance.plotter.computeForXY(originPosition1.x, originPosition1.y);
+            // DRAW VECTOR
+            if(initialPos != undefined) {
+                let p = plotter.computeForXY(initialPos.x, initialPos.y);
                 translate(p.x - width / 2, p.y - height / 2);
             }
 
-            if((endPosition && endPosition.z != 0) || originPosition.z != 0)
-                console.warn("Vector drawing is only implemented in 2D yet.");
-
-            let c = originPosition.copy();
-            endPosition = c.copy();
-            originPosition = c.clear();
-
-            let originPos = _pSimulationInstance.plotter.computeForXY(originPosition.x, originPosition.y);
-            let endPos    = _pSimulationInstance.plotter.computeForXY(endPosition.x   , endPosition.y);
+            let zzPosition = plotter.computeForXY(0, 0);
+            let endPos     = plotter.computeForXY(pointingPos.x, pointingPos.y);
 
             push();
-                stroke(color);
-                strokeWeight(strokeW);
-                fill(color);
+                plotter.drawer
+                    .stroke(color)
+                    .strokeWeight(strokeW)
+                    .fill(color);
 
-                line(originPos.x, originPos.y, endPos.x, endPos.y);
+                line(zzPosition.x, zzPosition.y, endPos.x, endPos.y);
                 translate(endPos.x, endPos.y);
 
-                push();
-                    rotate(endPos.sub(originPos).getAngle());
-                    translate(-headSize - 2, 0);
-                    triangle(0, headSize / 2, 0, -headSize / 2, headSize, 0);
-                pop();
+                rotate(endPos.sub(zzPosition).getAngle());
+                translate(-headSize - 2, 0);
+                triangle(0, headSize / 2, 0, -headSize / 2, headSize, 0);
         	pop();
 
-            if(vector.name != undefined) {
-                // NAME
-                let angle = vector.getAngle();
+
+            // DRAW VECTOR NAME
+            if(pointingPos.name != undefined) {
+                // Offset of the text based on the angle on the unit circle
+                let angle = pointingPos.getAngle();
                 if(angle < 0)
                     angle += 2*PI;
 
-                let xOffset = 0.8 * vector.name.cWidth;
+                let xOffset = 0.8 * pointingPos.name.cWidth;
                 if(    (PI/4   < angle && angle <= PI/2  )
                     || (3*PI/4 < angle && angle <= 5*PI/4)
                     || (3*PI/2 < angle && angle <= 7*PI/4)
                 ) xOffset *= -1;
 
-                let yOffset = -1.1 * vector.name.desc + 1.1 * vector.name.asc;
+                let yOffset = -1.1 * pointingPos.name.desc + 1.1 * pointingPos.name.asc;
                 if(    (PI/4   < angle && angle <=   PI/2)
                     || (PI/2   < angle && angle <= 3*PI/4)
                     || (PI     < angle && angle <= 5*PI/4)
                     || (7*PI/4 < angle && angle <=   2*PI)
                 ) yOffset *= -1;
 
-                vector.name
+                pointingPos.name
                     .setColor(color)
-                    .setPosition(vector.x / 2, vector.y / 2)
+                    .setPosition(pointingPos.x / 2, pointingPos.y / 2)
                     .setOffset(xOffset, yOffset)
-                    .draw(_pSimulationInstance.plotter.drawer);
+                    .draw(plotter.drawer);
 
 
                 // ARROW ON TOP
-                let originPos2 = _pSimulationInstance.plotter.computeForXY(vector.x / 2, vector.y / 2);
+                let arrowOrPos = plotter.computeForXY(pointingPos.x / 2, pointingPos.y / 2);
+                plotter.drawer
+                    .stroke(color)
+                    .strokeWeight(strokeW)
+                    .fill(color);
+
+                translate(
+                    arrowOrPos.x + xOffset - pointingPos.name.cWidth / 2,
+                    arrowOrPos.y + yOffset - pointingPos.name.asc
+                );
+                line(0, 0, pointingPos.name.cWidth, 0);
+
+                // Triangle
                 push();
-                    stroke(color);
-                    strokeWeight(strokeW);
-                    fill(color);
-
-                    translate(0, 0);
-                    translate(originPos2.x + xOffset - vector.name.cWidth / 2, originPos2.y + yOffset - vector.name.asc);
-                    line(0, 0, vector.name.cWidth, 0);
-
-                    push();
-                        translate(headSize + vector.name.cWidth / 2 - 1, 0);
-                        triangle(0, headSize / 4, 0, -headSize / 4, headSize / 2, 0);
-                    pop();
-            	pop();
+                    translate(headSize + pointingPos.name.cWidth / 1.5, 0);
+                    triangle(0, headSize / 4, 0, -headSize / 4, headSize / 2, 0);
+                pop();
             }
         pop();
 

@@ -1,6 +1,6 @@
 class SObject {
     constructor(x0, y0, positionName, vectorName) {
-        this.pos = new Vector(x0, y0);
+        this.pos = new Vector(x0, y0, 'rgb(255, 255, 255)', 'R1');
     }
 
     update(dt, everyObjects) {
