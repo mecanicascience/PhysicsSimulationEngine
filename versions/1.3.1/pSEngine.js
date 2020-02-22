@@ -555,7 +555,7 @@ class Vector {
     */
     add(x, y, z) {
         if(x instanceof Vector)
-            return this.add(x.x, y.x, z.x);
+            return this.add(x.x, x.y, x.z);
 
         this.x += x || 0;
         this.y += y || 0;
@@ -572,7 +572,7 @@ class Vector {
     */
     sub(x, y, z) {
         if(x instanceof Vector)
-            return this.sub(x.x, y.x, z.x);
+            return this.sub(x.x, x.y, x.z);
 
         return this.add(-x, -y, -z);
     }
