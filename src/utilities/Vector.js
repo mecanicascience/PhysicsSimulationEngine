@@ -100,11 +100,7 @@ class Vector {
     */
     add(x, y, z) {
         if(x instanceof Vector) {
-            this.x += x.x || 0;
-            this.y += x.y || 0;
-            this.z += x.z || 0;
-            return this;
-        }
+            return this.add(x.x, y.x, z.x);
 
         this.x += x || 0;
         this.y += y || 0;
@@ -121,7 +117,7 @@ class Vector {
     */
     sub(x, y, z) {
         if(x instanceof Vector)
-            return this.add(x.mult(-1));
+            return this.sub(x.x, y.x, z.x);
 
         return this.add(-x, -y, -z);
     }
