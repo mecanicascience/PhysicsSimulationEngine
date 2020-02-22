@@ -9,6 +9,9 @@ class Vector {
         this.setText(text);
     }
 
+
+
+    /* ========= BASIC VECTOR METHODS ========= */
     set(x, y, z) {
         if(x instanceof Vector) {
             this.x = x.x || 0;
@@ -35,10 +38,27 @@ class Vector {
         return this;
     }
 
-    copy() {
-        return new Vector(this.x, this.y, this.z);
+
+    equals(x, y, z) {
+        if(x instanceof Vector)
+            return this.equals(x.x, x.y, x.z);
+
+        return (this.x == x) && (this.y == y) && (this.z == z);
     }
 
+
+    copy() { return new Vector(this.x, this.y, this.z); }
+
+    clear() { return this.set(0, 0, 0); }
+
+    toString() { return `Vector Object : [${this.x}, ${this.y}, ${this.z}]`; }
+    /* ======================================== */
+
+
+
+
+
+    /* ========= BASIC VECTOR OPERATIONS ========= */
     add(x, y, z) {
         if(x instanceof Vector) {
             this.x += x.x || 0;
@@ -53,9 +73,6 @@ class Vector {
         return this;
     }
 
-    static add(v1, v2) {
-    	return new Vector(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
-    }
 
     sub(x, y, z) {
         if(x instanceof Vector)
@@ -64,9 +81,6 @@ class Vector {
         return this.add(-x, -y, -z);
     }
 
-    static sub(v1, v2) {
-    	return new Vector(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
-    }
 
     mult(c) {
         if(!(typeof c === 'number') || !isFinite(c)) {
@@ -82,6 +96,7 @@ class Vector {
         this.z *= c;
         return this;
     }
+
 
     div(c) {
         if(!(typeof c === 'number') || !isFinite(c)) {
@@ -99,10 +114,20 @@ class Vector {
         return this.mult(1 / c);
     }
 
-    mag() {
-        return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
-    }
 
+    // Static methods
+    static add (v1, v2) { return (v1.copy()).add(v2); }
+    static sub (v1, v2) { return (v1.copy()).sub(v2); }
+    static mult(v1, c ) { return (v1.copy()).mult(c); }
+    static div (v1, c ) { return (v1.copy()).div (c); }
+    /* =========================================== */
+
+
+
+
+
+    /* ========= ADVANCED MATH VECTOR OPERATIONS ========= */
+    // Dot and cross products
     dot(x, y, z) {
         if(x instanceof Vector)
             return this.dot(x.x, x.y, x.z);
@@ -118,6 +143,9 @@ class Vector {
         );
     }
 
+
+
+    // Magnitude
     normalize() {
         const vLen = this.mag();
 
@@ -125,44 +153,6 @@ class Vector {
             this.div(vLen);
 
         return this;
-    }
-
-    static dist(v1, v2) {
-    	return Vector.sub(v1, v2).mag();
-    }
-
-    setMag(c) {
-        return this.normalize().mult(c);
-    }
-
-    getAngle() {
-        return Math.atan2(this.y, this.x);
-    }
-
-    rotate(angle) {
-        const newAngle  = this.getAngle() + angle;
-        const magnitude = this.mag();
-
-        this.x = Math.cos(newAngle) * magnitude;
-        this.y = Math.sin(newAngle) * magnitude;
-
-        return this;
-    }
-
-    equals(x, y, z) {
-        if(x instanceof Vector)
-            return this.equals(x.x, x.y, x.z);
-
-        return (this.x == x) && (this.y == y) && (this.z == z);
-    }
-
-    clear() {
-        this.set(0, 0, 0);
-        return this;
-    }
-
-    toString() {
-        return `Vector Object : [${this.x}, ${this.y}, ${this.z}]`;
     }
 
     limit(min, max) {
@@ -174,13 +164,47 @@ class Vector {
     	return this;
     }
 
+    mag()     { return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z); }
+    setMag(c) { return this.normalize().mult(c); }
 
+
+
+    // Angles
+    rotate(angle) {
+        const newAngle  = this.getAngle() + angle;
+        const magnitude = this.mag();
+
+        this.x = Math.cos(newAngle) * magnitude;
+        this.y = Math.sin(newAngle) * magnitude;
+
+        return this;
+    }
+
+    getAngle() { return Math.atan2(this.y, this.x); }
+
+
+
+    // Static methods
+    static dist(v1, v2) { return Vector.sub(v1, v2).mag(); }
+
+    static dot      (v1, x, y, z) { return (v1.copy()).dot(x, y, z);  }
+    static cross    (v1, v2)      { return (v1.copy()).cross(v2);     }
+    static normalize(v1)          { return (v1.copy()).normalize();   }
+    static rotate   (v1, angle)   { return (v1.copy()).rotate(angle); }
+    /* =================================================== */
+
+
+
+
+
+    /* ========= DRAWING VECTORS ========= */
     draw(originPosition, headSize, strokeW) {
         if(originPosition != undefined)
             Vector.draw(this, this.color, this, originPosition, headSize, strokeW);
         else
             Vector.draw(this, this.color, this);
     }
+
 
     static draw(vector, color = 'rgb(255, 255, 255)', originPosition, originPosition1, headSize = 5, strokeW = 1, endPosition) {
         push();
@@ -261,4 +285,5 @@ class Vector {
 
         return this;
     }
+    /* =================================== */
 }
