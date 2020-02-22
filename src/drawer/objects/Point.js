@@ -23,7 +23,7 @@ class Point {
             .ellipse(this.pos.x, this.pos.y, this.pointSize, this.pointSize);
 
         // ORIGIN VECTOR
-        if(this.pos.text != undefined && this.drawOriginVector)
+        if(this.pos.name != undefined && this.drawOriginVector)
             this.pos.draw();
 
         // POINT NAME
@@ -31,7 +31,7 @@ class Point {
             return;
 
         this.pointName.pos = (this.pos.copy()).add(0, this.textPadding);
-        if(this.pos.text != undefined && this.drawOriginVector && this.pos.y < 0)
+        if(this.pos.name != undefined && this.drawOriginVector && this.pos.y < 0)
             this.pointName.pos = (this.pos.copy()).add(0, -this.textPadding);
 
         this.pointName.draw(drawer);

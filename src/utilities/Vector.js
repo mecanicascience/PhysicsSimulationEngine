@@ -1,12 +1,12 @@
 class Vector {
-    constructor(x, y, color = 'rgb(255, 255, 255)', text) {
+    constructor(x, y, color = 'rgb(255, 255, 255)', name) {
         this.x    = x || 0;
         this.y    = y || 0;
         this.z    = 0;
 
         this.color = color;
 
-        this.setText(text);
+        this.setName(name);
     }
 
 
@@ -26,14 +26,14 @@ class Vector {
         return this;
     }
 
-    setText(text) {
-        if(text == undefined)
+    setName(name) {
+        if(name == undefined)
             return this;
 
-        if(text instanceof Text)
-            this.text = text;
+        if(name instanceof Text)
+            this.name = name;
         else
-            this.text = new Text(text, new Vector(this.x, this.y));
+            this.name = new Text(name, new Vector(this.x, this.y));
 
         return this;
     }
@@ -238,26 +238,26 @@ class Vector {
                 pop();
         	pop();
 
-            if(vector.text != undefined) {
-                // TEXT
+            if(vector.name != undefined) {
+                // NAME
                 let angle = vector.getAngle();
                 if(angle < 0)
                     angle += 2*PI;
 
-                let xOffset = 0.8 * vector.text.cWidth;
+                let xOffset = 0.8 * vector.name.cWidth;
                 if(    (PI/4   < angle && angle <= PI/2  )
                     || (3*PI/4 < angle && angle <= 5*PI/4)
                     || (3*PI/2 < angle && angle <= 7*PI/4)
                 ) xOffset *= -1;
 
-                let yOffset = -1.1 * vector.text.desc + 1.1 * vector.text.asc;
+                let yOffset = -1.1 * vector.name.desc + 1.1 * vector.name.asc;
                 if(    (PI/4   < angle && angle <=   PI/2)
                     || (PI/2   < angle && angle <= 3*PI/4)
                     || (PI     < angle && angle <= 5*PI/4)
                     || (7*PI/4 < angle && angle <=   2*PI)
                 ) yOffset *= -1;
 
-                vector.text
+                vector.name
                     .setColor(color)
                     .setPosition(vector.x / 2, vector.y / 2)
                     .setOffset(xOffset, yOffset)
@@ -272,11 +272,11 @@ class Vector {
                     fill(color);
 
                     translate(0, 0);
-                    translate(originPos2.x + xOffset - vector.text.cWidth / 2, originPos2.y + yOffset - vector.text.asc);
-                    line(0, 0, vector.text.cWidth, 0);
+                    translate(originPos2.x + xOffset - vector.name.cWidth / 2, originPos2.y + yOffset - vector.name.asc);
+                    line(0, 0, vector.name.cWidth, 0);
 
                     push();
-                        translate(headSize + vector.text.cWidth / 2 - 1, 0);
+                        translate(headSize + vector.name.cWidth / 2 - 1, 0);
                         triangle(0, headSize / 4, 0, -headSize / 4, headSize / 2, 0);
                     pop();
             	pop();
