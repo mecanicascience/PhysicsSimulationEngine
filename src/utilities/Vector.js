@@ -99,7 +99,7 @@ class Vector {
     * @return this
     */
     add(x, y, z) {
-        if(x instanceof Vector) {
+        if(x instanceof Vector)
             return this.add(x.x, y.x, z.x);
 
         this.x += x || 0;
