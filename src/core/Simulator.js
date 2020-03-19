@@ -11,10 +11,9 @@ class pSimulator {
         window.getCustomConfig = this.getCustomConfig;
         window.getEngineConfig = this.getEngineConfig;
 
-        this.dtMoy         = 0.15;
+        this.dtMoy         = this.config.engine.runner.rollbackControl.minimalUpdateFPS;
         this.dtTotal       = 0;
         this.dtCount       = 0;
-        this.dtConfiguring = true;
     }
 
 
@@ -46,7 +45,7 @@ class pSimulator {
         	let dt           = (currentTime - s.lastUpdateTime) / 1000;
             let critiqDt     = s.dtMoy + s.dtMoy * s.config.engine.runner.rollbackControl.maxStandardDeviation;
 
-            if(dt > critiqDt && !s.dtConfiguring)
+            if(dt > critiqDt)
                 dt = s.dtMoy;
 
         	s.lastUpdateTime = currentTime;
@@ -60,9 +59,6 @@ class pSimulator {
                         s.dtMoy   = s.dtTotal / s.dtCount;
                         s.dtTotal = 0;
                         s.dtCount = 0;
-
-                        if(s.dtConfiguring)
-                            s.dtConfiguring = false;
                     }
                 }
 
@@ -145,7 +141,8 @@ class pSimulator {
                 },
                 rollbackControl : {
                     maxStandardDeviation : 0.8, // maximum tick deviation percentage for the software to consider as a rollback (in seconds)
-                    averageTimeSample    : 20   // sample size for tick average (in seconds)
+                    averageTimeSample    : 20,  // sample size for tick average (in seconds),
+                    minimalUpdateFPS     : 0.5  // minimal update frames
                 }
             },
             window : {
