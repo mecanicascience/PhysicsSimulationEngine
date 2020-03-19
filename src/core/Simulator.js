@@ -10,6 +10,11 @@ class pSimulator {
 
         window.getCustomConfig = this.getCustomConfig;
         window.getEngineConfig = this.getEngineConfig;
+
+        this.dtMoy         = 0.15;
+        this.dtTotal       = 0;
+        this.dtCount       = 0;
+        this.dtConfiguring = true;
     }
 
 
@@ -38,12 +43,29 @@ class pSimulator {
         window.draw = function() {
             let s            = _pSimulationInstance;
         	let currentTime  = Date.now();
-        	let dt           = (currentTime - s.lastUpdateTime) * s.config.engine.runner.simulationSpeed;
-        	s.lastUpdateTime = currentTime;
+        	let dt           = (currentTime - s.lastUpdateTime) / 1000;
+            let critiqDt     = s.dtMoy + s.dtMoy * s.config.engine.runner.rollbackControl.maxStandardDeviation;
 
-        	s.plotter.update(dt / 1000);
+            if(dt > critiqDt && !s.dtConfiguring)
+                dt = s.dtMoy;
+
+        	s.lastUpdateTime = currentTime;
+        	s.plotter.update(dt * s.config.engine.runner.simulationSpeed);
 
             if(currentTime - s.lastDrawTime >= 1 / s.config.engine.runner.DRAW_FPS) {
+                if(dt <= critiqDt) {
+                    s.dtTotal += dt;
+                    s.dtCount += 1;
+                    if(s.dtCount % s.config.engine.runner.rollbackControl.averageTimeSample == 0) {
+                        s.dtMoy   = s.dtTotal / s.dtCount;
+                        s.dtTotal = 0;
+                        s.dtCount = 0;
+
+                        if(s.dtConfiguring)
+                            s.dtConfiguring = false;
+                    }
+                }
+
                 s.plotter.draw();
                 s.lastDrawTime = currentTime;
             }
@@ -120,6 +142,10 @@ class pSimulator {
                 addingObjectsConfigKeyWords : {  // keywords for when we add objects at the start of the engine
                     runFunctions : '_RUN_F', // run a function with       ['_RUN_F', functionName, param1, param2, ...],
                     runClass     : '_RUN_C'  // instanciates a class with ['_RUN_C', className   , param1, param2, ...]
+                },
+                rollbackControl : {
+                    maxStandardDeviation : 0.8, // maximum tick deviation percentage for the software to consider as a rollback (in seconds)
+                    averageTimeSample    : 20   // sample size for tick average (in seconds)
                 }
             },
             window : {
