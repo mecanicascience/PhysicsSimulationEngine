@@ -140,9 +140,9 @@ class pSimulator {
                     runClass     : '_RUN_C'  // instanciates a class with ['_RUN_C', className   , param1, param2, ...]
                 },
                 rollbackControl : {
-                    maxStandardDeviation : 0.8, // maximum tick deviation percentage for the software to consider as a rollback (in seconds)
-                    averageTimeSample    : 20,  // sample size for tick average (in seconds),
-                    minimalUpdateFPS     : 0.5  // minimal update frames
+                    maxStandardDeviation : 0.8,  // maximum tick deviation percentage for the software to consider as a rollback (in seconds)
+                    averageTimeSample    : 20,   // sample size for tick average (in seconds),
+                    minimalUpdateFPS     : 0.15  // minimal update frames
                 }
             },
             window : {
