@@ -15,9 +15,11 @@ class pSPlotter {
 
     draw() {
         let plConf = this.simulator.config.engine.plotter;
-        let bg     = plConf.backgroundColor;
+        let bg     = plConf.backgroundColor.color;
 
-        background(bg.r, bg.g, bg.b);
+        if(plConf.backgroundColor.draw) {
+            background(bg.r, bg.g, bg.b);
+        }
 
         // Draw every object to the screen
         for (let i = 0; i < this.objectsL.length; i++)

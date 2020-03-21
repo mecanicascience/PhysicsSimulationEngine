@@ -162,7 +162,10 @@ class pSimulator {
         			x : 0,
         			y : 0
         		},
-                backgroundColor : { r : 0  , g : 0  , b : 0 },
+                backgroundColor : {
+                    draw : true,
+                    color : { r : 0  , g : 0  , b : 0 }
+                },
                 gridColor       : { r : 255, g : 255, b : 255, a : 0.6 },
         		displayGrid     : true  // true : display graph on the screen
         	}
