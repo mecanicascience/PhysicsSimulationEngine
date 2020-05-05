@@ -1,3 +1,5 @@
+import './../utilities/Vector';
+
 class pSPlotter {
     constructor(simulator, drawer) {
         this.simulator = simulator;
@@ -57,3 +59,5 @@ class pSPlotter {
         return v;
     }
 }
+
+export default pSPlotter;

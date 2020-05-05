@@ -1,3 +1,6 @@
+import pSPlotter from './../drawer/Plotter';
+import pSDrawer  from './../drawer/Drawer';
+
 class pSimulator {
     constructor() {
         this.config         = {};
@@ -205,3 +208,5 @@ class pSimulator {
         return window._pSimulationInstance.config.custom;
     }
 }
+
+export default pSimulator;

@@ -1,3 +1,5 @@
+import pSimulator from './Simulator';
+
 class pSEngine {
 	constructor() {
 		if(window.p5 == undefined)
@@ -13,3 +15,5 @@ class pSEngine {
 		};
 	}
 }
+
+export default pSEngine;

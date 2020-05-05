@@ -51,3 +51,5 @@ class Animation {
         return this.lastKey;
     }
 }
+
+export default Animation;

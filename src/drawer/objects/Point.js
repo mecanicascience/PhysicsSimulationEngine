@@ -1,3 +1,8 @@
+import './../../utilities/Vector';
+import './../Animation';
+import './Text';
+
+
 class Point {
     constructor(x, y, color, pointName, pointSize = 6, vectorName, drawOriginVector = true) {
         this.pos = new Vector(x, y, color, vectorName);
@@ -59,3 +64,5 @@ class Point {
         }
     }
 }
+
+export default Point;

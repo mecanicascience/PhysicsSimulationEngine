@@ -77,3 +77,5 @@ class pSDrawer {
         return this;
     }
 }
+
+export default pSDrawer;

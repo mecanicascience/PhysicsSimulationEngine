@@ -75,3 +75,5 @@ class Text {
         return this;
     }
 }
+
+export default Text;

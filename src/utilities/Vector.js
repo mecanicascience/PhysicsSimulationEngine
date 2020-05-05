@@ -1,3 +1,5 @@
+import './../drawer/objects/Text';
+
 /**
 * A class for every 3D Vectors.
 * <br/>Please note that current vector may only be used in <b>2D</b>.
@@ -441,3 +443,5 @@ class Vector {
     }
     /* =================================== */
 }
+
+export default Vector;
