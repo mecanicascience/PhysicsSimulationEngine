@@ -8,13 +8,13 @@ class Point {
         this.pos = new Vector(x, y, color, vectorName);
 
         if(pointName != undefined)
-            this.pointName = new Text(pointName, this.pos, 18, color);
+            this.pointName = new pSText(pointName, this.pos, 18, color);
 
         this.drawOriginVector = drawOriginVector;
         this.pointSize        = pointSize;
         this.pointSizeDrawing = pointSize;
 
-        this.animation = new Animation('easeInOutCubic');
+        //this.animation = new pSAnimation('easeInOutCubic');
 
         this.textPadding = 0.4;
     }
@@ -52,16 +52,16 @@ class Point {
 
 
     handleMouseOver(mX1, mX2, mY1, mY2) {
-        if(this.pos.x > mX1 && mX2 > this.pos.x && this.pos.y > mY1 && mY2 > this.pos.y) {
-            if(!this.animation.isAnimating)
-                this.animation.start();
-
-            this.pointSizeDrawing = this.pointSize + this.animation.nextKey() * 100;//8;
-        }
-        else {
-            this.animation.stop();
-            this.pointSizeDrawing = this.pointSize;
-        }
+        // if(this.pos.x > mX1 && mX2 > this.pos.x && this.pos.y > mY1 && mY2 > this.pos.y) {
+        //     if(!this.animation.isAnimating)
+        //         this.animation.start();
+        //
+        //     this.pointSizeDrawing = this.pointSize + this.animation.nextKey() * 100;//8;
+        // }
+        // else {
+        //     this.animation.stop();
+        //     this.pointSizeDrawing = this.pointSize;
+        // }
     }
 }
 

@@ -19,11 +19,11 @@ import Vector     from './utilities/Vector';
 // ========== GLOBAL VARIABLES ==========
 // ==== Drawer ====
 // Objects
-global.Point     = Point;
-global.Text      = Text;
+global.pSPoint     = Point;
+global.pSText      = Text;
 
 // Root
-global.Animation = Animation;
+global.pSAnimation = Animation;
 
 // ==== Utilities ====
 global.Vector    = Vector;
