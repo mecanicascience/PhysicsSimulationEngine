@@ -21,10 +21,8 @@ class pSAnimationHandler {
     getKey(f) {
         let dt = (new Date()).getTime() / 1000 - this.initialT;
 
-        if(dt > this.timeLength) {
-            this.finalDraw();
-            return;
-        }
+        if(dt > this.timeLength)
+            return this.finalDraw(this);
 
         this.lastKey = f(dt, this) / this.scaleTime;
 

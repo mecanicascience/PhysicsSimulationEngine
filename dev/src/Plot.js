@@ -3,7 +3,7 @@ class Plot {
         //this.pointsCarre = [new pSPoint(-1, 1), new pSPoint(1, 1), new pSPoint(1, -1), new pSPoint(-1, -1)];
         // this.anim = pSAnimation.new('interpolation', 5, this.points);
 
-        this.anim = pSAnimation.new('easeInOutCubic', 10);
+        this.anim = pSAnimation.new('easeInOutCubic', 5, {min : -5,  max : 5});
         this.anim.start();
 
         this.point = new pSPoint(0, 0)
