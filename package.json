@@ -1,6 +1,6 @@
 {
   "name": "physics-simulation-engine",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "A Simulation Engine for Physics Simulation",
   "main": "./src/app.js",
   "scripts": {
