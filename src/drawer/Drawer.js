@@ -26,6 +26,16 @@ class pSDrawer {
     	return this.ellipse(x, y, r, r);
     }
 
+    rect(x, y, w, h) {
+        let v0 = this.plotter.computeForXY(x, y);
+        let v1 = this.plotter.computeForXY(
+            -_pSimulationInstance.config.engine.plotter.scale.x + w,
+             _pSimulationInstance.config.engine.plotter.scale.y + h
+         );
+         rect(v0.x, v0.y, v1.x, v1.y);
+         return this;
+     };
+
 
 
 
