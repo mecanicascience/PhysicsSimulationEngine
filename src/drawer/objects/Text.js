@@ -1,6 +1,5 @@
 class Text {
-    constructor(text, pos, textSize = 18, color = "#FFFFFF", showHitbox = false) {
-        this.text     = text;
+    constructor(text, pos = new Vector(), textSize = 1, color = "#FFFFFF", showHitbox = false) {
         this.textSize = textSize;
         this.color    = color;
 
@@ -10,7 +9,7 @@ class Text {
 
         this.showHitbox = showHitbox;
 
-        this.calculateValues();
+        this.setText(text);
     }
 
 
@@ -19,42 +18,41 @@ class Text {
         let pos    = drawer.plotter.computeForXY(this.pos.x, this.pos.y);
 
         push();
-            textSize(this.textSize);
-            drawer
-                .noStroke()
-                .fill(this.color);
+            translate(-this.svgImg.width / 2 + this.xOffset, this.yOffset - this.svgImg.height / 2);
 
-            translate(-this.cWidth / 2 + this.xOffset, (-this.desc + this.asc) / 2 + this.yOffset);
-            text(this.text, pos.x, pos.y);
+            image(this.svgImg, pos.x, pos.y, this.svgImg.width, this.svgImg.height);
 
             if(this.showHitbox) {
+                let h = this.svgImg.height;
+                let w = this.svgImg.width;
+
                 drawer
                     .stroke(this.color)
                     .strokeWeight(1)
                     .noFill();
-                line(pos.x              , pos.y - this.asc , pos.x + this.cWidth, pos.y - this.asc);
-                line(pos.x              , pos.y + this.desc, pos.x + this.cWidth, pos.y + this.desc);
-                line(pos.x              , pos.y + this.desc, pos.x              , pos.y - this.asc);
-                line(pos.x + this.cWidth, pos.y + this.desc, pos.x + this.cWidth, pos.y - this.asc);
+                line(pos.x    , pos.y    , pos.x + w, pos.y    );
+                line(pos.x    , pos.y + h, pos.x + w, pos.y + h);
+                line(pos.x    , pos.y + h, pos.x    , pos.y    );
+                line(pos.x + w, pos.y + h, pos.x + w, pos.y    );
             }
         pop();
     }
 
 
-
-    calculateValues() {
-        let scalar = 0.8; // Different for each font
-
-        textSize(this.textSize);
-
-        this.asc    = textAscent () * scalar;
-        this.desc   = textDescent() * scalar;
-        this.cWidth = textWidth(this.text);
-    }
-
     setText(text) {
         this.text = text;
-        this.calculateValues();
+
+        let svg = '<svg' + MathJax.tex2svg(this.text,
+            { display : true, em : 12, ex : 6, containerWidth : 80 * 6, lineWidth : 100000, scale : 1 }
+        ).innerHTML.split('<svg')[1].split('</svg>')[0] + '</svg>';
+
+        svg = svg
+            .replace(/<g/g           , '<g color="' + this.color + '"')
+            .replace(/width="(.*?)"/ , 'width="'  + parseFloat(/width="(.*?)"/ .exec(svg)[1].split('ex')[0]) * this.textSize + 'ex"')
+            .replace(/height="(.*?)"/, 'height="' + parseFloat(/height="(.*?)"/.exec(svg)[1].split('ex')[0]) * this.textSize + 'ex"');
+
+        this.svgImg = loadImage(URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' })));
+
         return this;
     }
 
