@@ -1,5 +1,8 @@
 class Text {
     constructor(text, pos = new Vector(), textSize = 1, color = "#FFFFFF", showHitbox = false) {
+        if(window.MathJax == undefined)
+			console.error('You must import MathJax.js >=3.0.0 in order to use Text and Tex strings.');
+
         this.textSize = textSize;
         this.color    = color;
 
