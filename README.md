@@ -1,4 +1,4 @@
-# Physics Simulation Engine (pSEngine)
+# Physics Simulation Engine
 
 ![downloads](https://img.shields.io/github/downloads/MecanicaScience/PhysicsSimulationEngine/total)
 ![version](https://img.shields.io/github/package-json/v/MecanicaScience/PhysicsSimulationEngine)
