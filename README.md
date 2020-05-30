@@ -1,7 +1,7 @@
 # Physics Simulation Engine (pSEngine)
 
+![language](https://img.shields.io/badge/Language-JavaScript-blue)
 ![license](https://img.shields.io/github/license/mecanicascience/PhysicsSimulationEngine)
-![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2FMecanicaSci)
 
 <br/>
 
