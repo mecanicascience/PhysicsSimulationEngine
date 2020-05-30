@@ -1,27 +1,32 @@
 class Text {
+    /**
+    * @param text LaTeX code (insert '\text{TEXT}' for plain text)
+    * @param pos text position (default (0, 0))
+    * @param textSize text size multiplier (default 1)
+    * @param color text color (default white)
+    * @param showHitbox true : show text hitbox (default : false)
+    */
     constructor(text, pos = new Vector(), textSize = 1, color = "#FFFFFF", showHitbox = false) {
         if(window.MathJax == undefined)
 			console.error('You must import MathJax.js >=3.0.0 in order to use Text and Tex strings.');
 
-        this.textSize = textSize;
-        this.color    = color;
-
-        this.pos     = pos;
-        this.xOffset = 0;
-        this.yOffset = 0;
-
+        this.textSize   = textSize;
+        this.color      = color;
+        this.pos        = pos;
         this.showHitbox = showHitbox;
 
         this.setText(text);
     }
 
-
+    /**
+    * Draw the text to the screen
+    */
     draw() {
         let drawer = _pSimulationInstance.plotter.drawer;
         let pos    = drawer.plotter.computeForXY(this.pos.x, this.pos.y);
 
         push();
-            translate(-this.svgImg.width / 2 + this.xOffset, this.yOffset - this.svgImg.height / 2);
+            translate(-this.svgImg.width / 2, -this.svgImg.height / 2);
 
             image(this.svgImg, pos.x, pos.y, this.svgImg.width, this.svgImg.height);
 
@@ -41,7 +46,9 @@ class Text {
         pop();
     }
 
-
+    /**
+    * Change text value
+    */
     setText(text) {
         this.text = text;
 
@@ -59,18 +66,21 @@ class Text {
         return this;
     }
 
+    /**
+    * Changes text position
+    * @param x new X position
+    * @param y new Y position
+    */
     setPosition(x, y) {
         this.pos.x = x;
         this.pos.y = y;
         return this;
     }
 
-    setOffset(x, y) {
-        this.xOffset = x;
-        this.yOffset = y;
-        return this;
-    }
-
+    /**
+    * Changes text color
+    * @param color New color
+    */
     setColor(color) {
         this.color = color;
         return this;

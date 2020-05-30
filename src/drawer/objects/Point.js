@@ -4,6 +4,16 @@ import './Text';
 
 
 class Point {
+    /**
+    * Creates a new Point
+    * @param x X point position
+    * @param y Y point position
+    * @param color drawing color of the point
+    * @param pointName name of the point (in LaTeX)
+    * @param pointSize Size of the point (default 6)
+    * @param vectorName Name of the vector
+    * @param drawOriginVector true : draw the vector from the origin to this point
+    */
     constructor(x, y, color, pointName, pointSize = 6, vectorName, drawOriginVector = true) {
         this.pos = new Vector(x, y, color, vectorName);
 
@@ -14,13 +24,18 @@ class Point {
         this.pointSize        = pointSize;
         this.pointSizeDrawing = pointSize;
 
-        //this.animation = new pSAnimation('easeInOutCubic');
-
         this.textPadding = 0.4;
     }
 
-    update() { }
+    /**
+    * Updates the point
+    * @param dt Delta time since last update
+    */
+    update(dt) { }
 
+    /**
+    * Draw the point to the screen
+    */
     draw() {
         let drawer = _pSimulationInstance.plotter.drawer;
 
@@ -48,20 +63,6 @@ class Point {
             this.pointName.pos = (this.pos.copy()).add(0, -this.textPadding);
 
         this.pointName.draw(drawer);
-    }
-
-
-    handleMouseOver(mX1, mX2, mY1, mY2) {
-        // if(this.pos.x > mX1 && mX2 > this.pos.x && this.pos.y > mY1 && mY2 > this.pos.y) {
-        //     if(!this.animation.isAnimating)
-        //         this.animation.start();
-        //
-        //     this.pointSizeDrawing = this.pointSize + this.animation.nextKey() * 100;//8;
-        // }
-        // else {
-        //     this.animation.stop();
-        //     this.pointSizeDrawing = this.pointSize;
-        // }
     }
 }
 

@@ -1,6 +1,10 @@
 import './../utilities/Vector';
 
 class pSPlotter {
+    /**
+    * @param simulator Main Engine simulator
+    * @param drawer Main Engine drawer instance
+    */
     constructor(simulator, drawer) {
         this.simulator = simulator;
         this.drawer    = drawer;
@@ -9,12 +13,16 @@ class pSPlotter {
         this.drawer.plotter = this;
     }
 
-
+    /**
+    * Update main loop
+    * @param dt Delta time since last update (in seconds)
+    */
     update(dt) {
         for (let i = 0; i < this.objectsL.length; i++)
             this.objectsL[i].update(dt, this.objectsL);
     }
 
+    /* Draw main loop */
     draw() {
         let plConf = this.simulator.config.engine.plotter;
         let bg     = plConf.backgroundColor.color;

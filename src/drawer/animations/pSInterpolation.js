@@ -1,6 +1,11 @@
 import pSAnimationHandler from './pSAnimationHandler';
 
 class pSInterpolation extends pSAnimationHandler {
+    /**
+    * Interpolation animation
+    * @param timeLength Duration of the animation in seconds
+    * @param datas The datas to be interpolated '[Point1, Point2, ...]'
+    */
     constructor(timeLength, datas) {
         super(timeLength, datas);
 
@@ -10,6 +15,7 @@ class pSInterpolation extends pSAnimationHandler {
         this.localDt = 0;
     }
 
+    /** Set shape based on animation and points */
     nextShape(points) {
         this.i++;
 
@@ -20,35 +26,57 @@ class pSInterpolation extends pSAnimationHandler {
         return [points[this.i], points[j]];
     }
 
-    update(dt, t) { }
+    /**
+    * @param time Current time of the animation
+    * @param th current pSEaseInOutCubic instance
+    * @return the corresponding update key
+    */
+    update(dt, th) { }
 
-    draw(dt, t) {
-        let c = t.timeLength / t.datas.length;
-        if(!(t.currentShape[0] == undefined || t.currentShape[1] == undefined)) {
-            if(dt - t.localDt >= c) {
-                t.currentShape = t.nextShape(t.datas);
-                t.localDt += c;
+    /**
+    * @param time Current time of the animation
+    * @param th current pSEaseInOutCubic instance
+    * @return the corresponding draw key
+    */
+    draw(dt, th) {
+        let c = th.timeLength / th.datas.length;
+        if(!(th.currentShape[0] == undefined || th.currentShape[1] == undefined)) {
+            if(dt - th.localDt >= c) {
+                th.currentShape = th.nextShape(th.datas);
+                th.localDt += c;
             }
         }
 
-        t.drawCurrentShape(
-            t.datas,
+        th.drawCurrentShape(
+            th.datas,
             (i, lt, ti, c) => {
                 let percent = 1;
                 if(i == ti)
                     percent = lt / c;
                 return percent;
-            }, t, t.i + 1, dt - t.localDt, c);
+            }, th, th.i + 1, dt - th.localDt, c);
     }
 
-    finalDraw() {
+    /**
+    * Draw the final animation
+    * @param th current pSEaseInOutCubic instance
+    */
+    finalDraw(th) {
         this.drawCurrentShape(this.datas, () => 1, this, this.datas.length, 0);
     }
 
-
-    drawCurrentShape(d, percentFunction, t, maxI, lt, c) {
+    /**
+    * Draw current shape on screen
+    * @param d this.datas
+    * @param percentFunction Current animation get percent function
+    * @param th current pSEaseInOutCubic instance
+    * @param maxI Max points count
+    * @param lt Current time value
+    * @param c Final time value / max points count
+    */
+    drawCurrentShape(d, percentFunction, th, maxI, lt, c) {
         for (let i = 0; i < maxI; i++) {
-            let percent = percentFunction(i, lt, t.i, c);
+            let percent = percentFunction(i, lt, th.i, c);
 
             let n = i + 1;
             if(n >= d.length) n = 0;
