@@ -10,7 +10,9 @@ pSEngine is a free and open-source project, so you can directly support it by su
 [TODO]
 
 ## Issues
-If you encountered any issue, you can describe it under the [issues panel](https://github.com/mecanicascience/PhysicsSimulationEngine/issues). You can also request new features here. Please be polite, correct and precisly describe what your problem or suggestion is. Please also note that pSEngine is only maintained by volunteers, so please be tolerant about the possible answer delay.
+If you encountered any issue, you can describe it under the [issues panel](https://github.com/mecanicascience/PhysicsSimulationEngine/issues). You can also request new features here.
+
+Please be polite, correct and precisly describe what your problem or suggestion is. Please also note that pSEngine is only maintained by volunteers, so please be tolerant about the possible answer delay.
 
 ## Credits
  - pSEngine was created and is currently maintained by [Mecanica Science](https://mecanicascience.herokuapp.com/).
