@@ -33,7 +33,13 @@ Please be polite, correct and precisly describe what your problem or suggestion 
 <br/>
 
 ## How to contribute
-[TODO]
+If you want to help building pSEngine, you can add new issues and post your suggestions here. To run pSEngine on your local device, you'll need to have [Git](https://git-scm.com/) and [npm](https://www.npmjs.com/) installed.
+
+Then, clone the repository using `git clone https://github.com/mecanicascience/PhysicsSimulationEngine.git`, and open a terminal window inside the `PhysicsSimulationEngine` cloned folder. Once done, run `npm install` and wait for the installation being done.
+
+You then have two commands that you can run inside the folder `PhysicsSimulationEngine` :
+ - `npm run watch` : creates a local server accessible on `localhost:8080`, which auto restart and compile when modifications on the engine are made. The runned files are located into the `dev/` folder.
+ - `npm run build` : compiles the new pSEngine code inside the `build/` folder.
 
 <br/>
 
