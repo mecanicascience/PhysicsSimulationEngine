@@ -1,6 +1,8 @@
 # Physics Simulation Engine (pSEngine)
 
-![language](https://img.shields.io/badge/Language-JavaScript-blue)
+![downloads](https://img.shields.io/github/downloads/MecanicaScience/PhysicsSimulationEngine/total)
+![version](https://img.shields.io/github/package-json/v/MecanicaScience/PhysicsSimulationEngine)
+![language](https://img.shields.io/badge/Language-JavaScript-9cf)
 ![license](https://img.shields.io/github/license/mecanicascience/PhysicsSimulationEngine)
 
 <br/>
