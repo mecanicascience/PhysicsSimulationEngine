@@ -17,7 +17,7 @@ pSEngine is a free and open-source project, so you can directly support it by su
 <br/>
 
 ## Get Started
-To get started using pSEngine, you should check the [Physics Simulation Engine wiki](https://github.com/mecanicascience/PhysicsSimulationEngine/wiki), which also contains detailed information about mainly everything possible with this JavaScript library.
+To get started using pSEngine, you should check the [Physics Simulation Engine wiki](https://github.com/mecanicascience/PhysicsSimulationEngine/wiki), which also contains detailed information about mainly everything possible with this JavaScript library. If you just want to use a default template, you can found the [main template code here](https://github.com/mecanicascience/PhysicsSimulationEngine/tree/master/examples/template).
 
 If you want to know how simulations (and so, how this engine) works, you can also [read an article](https://mecanicascience.herokuapp.com/article/les_bases_de_la_simulation&articleview&3) published on the website of Mecanica Science called 'Simulation bases'. (Warning : Article is written in French).
 
@@ -58,6 +58,6 @@ You can also draw and animate TeX code.
 ![TeX code drawing](imgs/example_tex_drawing.png)
 <br/>
 
-A simulation of the Solar System with real distances. [See live demo](https://mecanicascience.herokuapp.com/simulationview/simulation_systeme_solaire&simulationview&mecanique&1).
+A simulation of the Solar System with real distances. [See live demo](https://mecanicascience.github.io/PhysicsSimulationEngine/examples/solar_system/).
 
 ![Solar System simulation](imgs/example_solar_system.png)
