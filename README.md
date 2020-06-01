@@ -19,7 +19,7 @@ pSEngine is a free and open-source project, so you can directly support it by su
 ## Get Started
 To get started using pSEngine, you should check the [Physics Simulation Engine wiki](https://github.com/mecanicascience/PhysicsSimulationEngine/wiki), which also contains detailed information about nearly everything possible with this JavaScript library. If you just want to use a default template, you can found the [main template code here](https://github.com/mecanicascience/PhysicsSimulationEngine/tree/master/examples/template).
 
-If you want to know how simulations (and thus the engine) work, you can also [read an article](https://mecanicascience.herokuapp.com/article/les_bases_de_la_simulation&articleview&3) published on the website of Mecanica Science called 'Simulation bases' (warning: the article is written in French).
+If you want to know how simulations (and thus the engine) work, you can also [read an article](https://mecanicascience.herokuapp.com/article/les_bases_de_la_simulation&articleview&3) published on the website of Mecanica Science called 'Simulation bases' (warning : the article is written in French).
 
 You can also check [pSEngine examples](https://github.com/mecanicascience/PhysicsSimulationEngine/tree/master/examples) to see how a simple program works. Finally, you can see full [simulation examples](https://github.com/mecanicascience/PhysicsSimulationEngine#simulations-and-animations-examples) to improve your understanding of the library.
 
@@ -38,7 +38,7 @@ If you want to help building pSEngine, you can add new issues and post your sugg
 Then, fork the project into your own GitHub account, clone the repository using `git clone https://github.com/mecanicascience/PhysicsSimulationEngine.git`, and open a terminal window inside the `PhysicsSimulationEngine` cloned folder. Once done, run `npm install` and wait for the installation to finish.
 
 You then have two commands that you can run inside the folder `PhysicsSimulationEngine` :
- - `npm run watch` : creates a local server accessible on `localhost:8080`, which automatically restarts and compiles when modifications of the engine are made. The runned files are located into the `dev/` folder.
+ - `npm run watch` : creates a local server accessible on `localhost:8080`, which automatically restarts and compiles when modifications on the engine are made. The runned files are located into the `dev/` folder.
  - `npm run build` : compiles the new pSEngine code inside the `build/` folder.
 
 Once your are done modifying the engine, to commit your changes to GitHub, run:
