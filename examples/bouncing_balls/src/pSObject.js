@@ -14,7 +14,7 @@ class pSObject
       this.pos.y += this.vel.y * dt;
 
       //If the balls are out of the bounds, then they bounce
-      if (this.pos.x > 500 || this.pos.x < -500)
+      if (this.pos.x > _pSimulationInstance.getEngineConfig().plotter.scale.x || this.pos.x < -_pSimulationInstance.getEngineConfig().plotter.scale.x)
       {
         this.vel.x = -this.vel.x;
 
@@ -27,7 +27,7 @@ class pSObject
         ++this.bounceCount;
       }
 
-      if(this.pos.y > 500 || this.pos.y < -500)
+      if(this.pos.y > _pSimulationInstance.getEngineConfig().plotter.scale.y || this.pos.y < -_pSimulationInstance.getEngineConfig().plotter.scale.y)
       {
         if(this.bounceCount < 3)
         {
