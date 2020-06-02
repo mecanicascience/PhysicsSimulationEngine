@@ -33,6 +33,6 @@ class pSObject {
    }
 
    draw(drawer) {
-      drawer.noStroke().fill('rgb(Math.round(Math.random() * 255), Math.round(Math.random() * 255), Math.round(Math.random() * 255))').ellipse(this.pos.x, this.pos.y, 5, 5);
+      drawer.noStroke().fill(`rgba(${Math.round(Math.random() * 255)}, ${Math.round(Math.random() * 255)}, ${Math.round(Math.random() * 255)})`).ellipse(this.pos.x, this.pos.y, 5, 5);
    }
 }
