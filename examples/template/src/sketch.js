@@ -7,6 +7,6 @@ function runSimulator(simulator) {
 			};
 			engineConf.plotter.displayGrid = false;
 		})
-		.addObjects(SObject, 1, ["_RUN_F", random, 0, 2])
+		.addObjects(pSObject, 1, ["_RUN_F", random, 0, 2])
 	;
 }

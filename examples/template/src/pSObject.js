@@ -1,4 +1,4 @@
-class SObject {
+class pSObject {
     constructor(_custom_param_) {
         console.log(_custom_param_);
     }
