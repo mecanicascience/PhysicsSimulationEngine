@@ -56,10 +56,10 @@ class Vector {
         if(name == undefined)
             return this;
 
-        if(name instanceof Text)
+        if(name instanceof pSText)
             this.name = name;
         else
-            this.name = new Text(name, new Vector(this.x, this.y));
+            this.name = new pSText(name, new Vector(this.x, this.y));
 
         return this;
     }
