@@ -4,7 +4,7 @@ class pSObject
    constructor(x0, y0, v0)
    {
       this.pos = new Vector(x0, y0);
-      this.vel = { x: v0, y: 0 }
+      this.vel = new Vector(v0, 0);
       this.bounceCount = 0;
    }
 
