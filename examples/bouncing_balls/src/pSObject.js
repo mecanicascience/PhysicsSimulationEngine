@@ -4,6 +4,11 @@ class pSObject {
       this.pos = new Vector(x0, y0);
       this.vel = new Vector(v0, 0);
       this.bounceCount = 0;
+      this.color = {
+           r : Math.round(Math.random() * 255),
+           g : Math.round(Math.random() * 255),
+           b : Math.round(Math.random() * 255)
+      };
    }
 
    update(dt) {
@@ -33,6 +38,9 @@ class pSObject {
    }
 
    draw(drawer) {
-      drawer.noStroke().fill('red').ellipse(this.pos.x, this.pos.y, 5, 5);
+      drawer
+          .noStroke()
+          .fill(this.color.r, this.color.g, this.color.b)
+          .ellipse(this.pos.x, this.pos.y, 5, 5);
    }
 }
