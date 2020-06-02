@@ -10,8 +10,7 @@ class pSObject
 
    update(dt)
    {
-      this.pos.x += this.vel.x * dt;
-      this.pos.y += this.vel.y * dt;
+      this.pos.add((this.vel.copy()).mult(dt));
 
       //If the balls are out of the bounds, then they bounce
       if (this.pos.x > _pSimulationInstance.getEngineConfig().plotter.scale.x || this.pos.x < -_pSimulationInstance.getEngineConfig().plotter.scale.x)
