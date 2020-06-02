@@ -59,7 +59,7 @@ class Vector {
         if(name instanceof pSText)
             this.name = name;
         else
-            this.name = new pSText(name, new Vector(this.x, this.y));
+            this.name = new pSText(name, new Vector(this.x, this.y, this.z));
 
         return this;
     }
@@ -275,7 +275,7 @@ class Vector {
 
     // Angles
     /**
-    * Rotate this vector by an angle
+    * Rotate this vector by an angle on the XY plane
     * @param angle An angle IN RADIANS
     * @return this
     */
