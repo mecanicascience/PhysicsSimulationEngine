@@ -4,9 +4,11 @@ class pSObject {
       this.pos = new Vector(x0, y0);
       this.vel = new Vector(v0, 0);
       this.bounceCount = 0;
-      this.color = { r: Math.round(Math.random() * 255),
-                     g: Math.round(Math.random() * 255),
-                     b: Math.round(Math.random() * 255)}
+      this.color = {
+           r : Math.round(Math.random() * 255),
+           g : Math.round(Math.random() * 255),
+           b : Math.round(Math.random() * 255)
+      };
    }
 
    update(dt) {
