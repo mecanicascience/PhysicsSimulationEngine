@@ -12,6 +12,7 @@ class pSEngine {
 		window.setup = function() {
 			window._pSimulationInstance = new pSimulator();
 			window._pSimulationInstance.instanciate();
+			window.pSEngine = window._pSimulationInstance.getPSEngineVar();
 		};
 	}
 }

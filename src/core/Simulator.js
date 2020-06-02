@@ -207,6 +207,11 @@ class pSimulator {
     getCustomConfig() {
         return window._pSimulationInstance.config.custom;
     }
+
+
+    getPSEngineVar() {
+        
+    }
 }
 
 export default pSimulator;
