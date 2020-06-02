@@ -13,10 +13,10 @@ class Vector {
     * @param name Name of the Vector to be potentially displayed (@see draw method)
     * @return this
     */
-    constructor(x, y, color = 'rgb(255, 255, 255)', name) {
+    constructor(x, y, z, color = 'rgb(255, 255, 255)', name) {
         this.x    = x || 0;
         this.y    = y || 0;
-        this.z    = 0;
+        this.z    = z || 0;
 
         this.color = color;
 
