@@ -1,0 +1,47 @@
+
+class pSObject
+{
+   constructor(x0, y0, v0)
+   {
+      this.pos = new Vector(x0, y0);
+      this.vel = { x: v0, y: 0 }
+      this.bounceCount = 0;
+   }
+
+   update(dt)
+   {
+      this.pos.x += this.vel.x * dt;
+      this.pos.y += this.vel.y * dt;
+
+      //If the balls are out of the bounds, then they bounce
+      if (this.pos.x > 500 || this.pos.x < -500)
+      {
+        this.vel.x = -this.vel.x;
+
+        //While bounceCount < 3, the balls bounce in a random direction
+        if(this.bounceCount < 3)
+        {
+          this.vel.y = Math.round(Math.random() * 100);
+        }
+
+        ++this.bounceCount;
+      }
+
+      if(this.pos.y > 500 || this.pos.y < -500)
+      {
+        if(this.bounceCount < 3)
+        {
+          this.vel.x = Math.round(Math.random() * 100);
+        }
+
+        this.vel.y = -this.vel.y;
+
+        ++this.bounceCount;
+      }
+   }
+
+   draw(drawer)
+   {
+      drawer.noStroke().fill('red').ellipse(this.pos.x, this.pos.y, 5, 5);
+   }
+}
