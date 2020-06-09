@@ -53,7 +53,7 @@ Once everything is ready, you should be able to submit your changes as a pull re
 <br/>
 
 ## Credits
-pSEngine was created and is currently maintained by [Mecanica Science](https://mecanicascience.herokuapp.com/).
+pSEngine was created and is currently maintained by [Mecanica Science](https://mecanicascience.herokuapp.com/) with the help of [Epsylene](https://github.com/Epsylene).
 You can find further information and library credits down below.
  - If you want to use pSEngine, you need to follow the [license requirements](https://github.com/mecanicascience/PhysicsSimulationEngine/blob/master/LICENSE) (to sum up, you can use pSEngine everywhere and for any purpose, as long as there is a copyright notice).
  - You can find all pSEngine versions on [this link](https://github.com/mecanicascience/PhysicsSimulationEngine/releases).
