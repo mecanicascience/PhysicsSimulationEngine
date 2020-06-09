@@ -33,6 +33,8 @@ Please be polite, correct and precisely describe what your problem or suggestion
 <br/>
 
 ## How to contribute
+The list of every contribuators can be found [in this file](https://github.com/mecanicascience/PhysicsSimulationEngine/blob/master/.all-contributorsrc).
+
 If you want to help building pSEngine, you can add new issues and post your suggestions here. To run pSEngine on your local device, you'll first need to install [Git](https://git-scm.com/) and [NodeJs](https://nodejs.org/en/).
 
 Then, fork the project into your own GitHub account, clone the repository using `git clone https://github.com/mecanicascience/PhysicsSimulationEngine.git`, and open a terminal window inside the `PhysicsSimulationEngine` cloned folder. Once done, run `npm install` and wait for the installation to finish.
