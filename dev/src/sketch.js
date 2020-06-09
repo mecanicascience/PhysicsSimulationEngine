@@ -10,6 +10,6 @@ function runSimulator(simulator) {
 		.setCustomConfig((customConf) => {
 			customConf.drawSizeMultiplier = 10;
 		})
-		.addObjects(Plot, 1)
+		.addObjects(Plot, 1, new Vector(1, 2), new Vector(25, 34), new Vector(12, 25), [255, 255, 255])
 	;
 }

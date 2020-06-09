@@ -6,6 +6,7 @@ import pSimulator from './core/Simulator';
 // Objects
 import pSPoint    from './drawer/objects/Point';
 import pSText     from './drawer/objects/Text';
+import pSTriangle from './drawer/objects/Triangle';
 
 // Root
 import Animation  from './drawer/Animation';
@@ -21,6 +22,7 @@ import Vector     from './utilities/Vector';
 // Objects
 global.pSPoint     = pSPoint;
 global.pSText      = pSText;
+global.pSTriangle  = pSTriangle;
 
 // Root
 global.pSAnimation = Animation;
