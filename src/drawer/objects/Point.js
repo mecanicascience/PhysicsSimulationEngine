@@ -3,7 +3,7 @@ import './../Animation';
 import './Text';
 
 
-class Point {
+class pSPoint {
     /**
     * Creates a new Point
     * @param x X point position
@@ -14,7 +14,7 @@ class Point {
     * @param vectorName Name of the vector
     * @param drawOriginVector true : draw the vector from the origin to this point
     */
-    constructor(x, y, color, pointName, pointSize = 6, vectorName, drawOriginVector = true) {
+    constructor(x, y, color = 'white', pointName, pointSize = 6, vectorName, drawOriginVector = true) {
         this.pos = new Vector(x, y, color, vectorName);
 
         if(pointName != undefined)
@@ -66,4 +66,4 @@ class Point {
     }
 }
 
-export default Point;
+export default pSPoint;

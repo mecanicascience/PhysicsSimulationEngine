@@ -1,4 +1,4 @@
-class Text {
+class pSText {
     /**
     * @param text LaTeX code (insert '\text{TEXT}' for plain text)
     * @param pos text position (default (0, 0))
@@ -87,4 +87,4 @@ class Text {
     }
 }
 
-export default Text;
+export default pSText;

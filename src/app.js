@@ -4,8 +4,8 @@ import pSimulator from './core/Simulator';
 
 // ==== Drawer ====
 // Objects
-import Point      from './drawer/objects/Point';
-import Text       from './drawer/objects/Text';
+import pSPoint    from './drawer/objects/Point';
+import pSText     from './drawer/objects/Text';
 
 // Root
 import Animation  from './drawer/Animation';
@@ -19,14 +19,14 @@ import Vector     from './utilities/Vector';
 // ========== GLOBAL VARIABLES ==========
 // ==== Drawer ====
 // Objects
-global.pSPoint     = Point;
-global.pSText      = Text;
+global.pSPoint     = pSPoint;
+global.pSText      = pSText;
 
 // Root
 global.pSAnimation = Animation;
 
 // ==== Utilities ====
-global.Vector    = Vector;
+global.Vector      = Vector;
 
 
 // ========== PSENGINE LAUNCH ==========
