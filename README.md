@@ -46,7 +46,7 @@ You then have two commands that you can run inside the folder `PhysicsSimulation
  - `npm run build` : compiles the new pSEngine code inside the `build/` folder.
 
 Once your are done modifying the engine, to commit your changes to GitHub, run:
-```
+```git
   git add *
   git commit -m "YOUR COMMIT MESSAGE"
   git push
