@@ -67,9 +67,11 @@ class pSTriangle {
     * @param y The distance on the Y axis.
     */
     translate(x, y) {
-        this.setCoordinates(Vector.add(this.p0, new Vector(x, y)),
-                            Vector.add(this.p1, new Vector(x, y)),
-                            Vector.add(this.p2, new Vector(x, y)));
+        this.setCoordinates(
+                Vector.add(this.p0, new Vector(x, y)),
+                Vector.add(this.p1, new Vector(x, y)),
+                Vector.add(this.p2, new Vector(x, y))
+        );
         return this;
     }
 
