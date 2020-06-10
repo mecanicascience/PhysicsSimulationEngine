@@ -1,13 +1,13 @@
 class Plot {
     constructor() {
-        this.tex = new pSText('\\sum \\sqrt{x^2+1} + 6 x \\text{ with $x \\in \\mathbb{R}$}', new Vector(), 7, 'white');
+        this.tr = new pSTriangle(new Vector(-2, -2), new Vector(2, -2), new Vector(0, 2), 'white');
     }
 
     update(dt) {
-
+        this.tr.rotate(0.01);
     }
 
     draw(drawer) {
-        this.tex.draw();
+        this.tr.draw();
     }
 }
