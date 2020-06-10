@@ -47,9 +47,9 @@ You then have two commands that you can run inside the folder `PhysicsSimulation
 
 Once your are done modifying the engine, to commit your changes to GitHub, run:
 ```git
-  git add *
-  git commit -m "YOUR COMMIT MESSAGE"
-  git push
+ > git add *
+ > git commit -m "YOUR COMMIT MESSAGE"
+ > git push
 ```
 
 Once everything is ready, you should be able to submit your changes as a pull request (see the [Github help documentation](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request) about this for more information).
