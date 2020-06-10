@@ -5,6 +5,8 @@
 ![language](https://img.shields.io/badge/Language-JavaScript-9cf)
 ![license](https://img.shields.io/github/license/mecanicascience/PhysicsSimulationEngine)
 
+![Electric field example](imgs/example_electric_field.png)
+
 <br/>
 
 ## Presentation
