@@ -61,6 +61,30 @@ class pSTriangle {
 
 
     /**
+    * Translates the triangle from its barycenter by the
+    * specified distance in X and Y.
+    * @param x The distance on the X axis.
+    * @param y The distance on the Y axis.
+    */
+    translate(x, y) {
+        this.setCoordinates(Vector.add(this.p0, new Vector(x, y)),
+                            Vector.add(this.p1, new Vector(x, y)),
+                            Vector.add(this.p2, new Vector(x, y)));
+        return this;
+    }
+
+    /**
+    * Translates the triangle from its barycenter by
+    * the specified vector.
+    * @param v The vector to translate the triangle.
+    */
+    translate(v) {
+        this.translate(v.x, v.y);
+        return this;
+    }
+
+
+    /**
     * Updates the triangle
     * @param dt Delta time since last update
     */
