@@ -136,6 +136,37 @@ class pSDrawer {
     }
 
 
+
+    beginShape(TYPE) {
+        beginShape(TYPE);
+        return this;
+    }
+
+    endShape() {
+        endShape();
+        return this;
+    }
+
+    vertex(x, y) {
+        let v = this.plotter.computeForXY(x, y);
+        vertex(v.x, v.y);
+        return this;
+    }
+
+    pop() {
+        pop();
+        return this;
+    }
+
+    push() {
+        push();
+        return this;
+    }
+
+
+
+
+
     /** Remove stroke of the shape */
     noStroke() {
         noStroke();

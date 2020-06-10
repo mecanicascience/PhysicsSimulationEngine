@@ -1,0 +1,41 @@
+{
+    "projectName": "PhysicsSimulationEngine",
+    "projectOwner": "MecanicaScience",
+    "files": [
+        "README.md"
+    ],
+    "imageSize": 100,
+    "commit": true,
+    "contributors": [
+        {
+            "login": "xam4lor",
+            "name": "Maxime D.",
+            "avatar_url": "https://avatars3.githubusercontent.com/u/9009614?v=4",
+            "profile": "https://github.com/xam4lor/",
+            "contributions": [
+                "bug",
+                "code",
+                "documentation",
+                "test",
+                "translation"
+            ]
+        },
+        {
+            "login": "Epsylene",
+            "name": "Victor R.",
+            "avatar_url": "https://avatars2.githubusercontent.com/u/25596185?v=4",
+            "profile": "https://github.com/Epsylene/",
+            "contributions": [
+                "bug",
+                "code",
+                "documentation",
+                "test",
+                "translation"
+            ]
+        }
+    ],
+    "repoType": "github",
+    "repoHost": "https://github.com",
+    "contributorsPerLine": 7,
+    "skipCi": true
+}
