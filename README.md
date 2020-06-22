@@ -67,7 +67,7 @@ You can find further information and library credits down below.
 
 <br/><br/>
 # Simulations and animations examples
-An example of an Electric field. [See live demo](https://mecanicascience.herokuapp.com/simulationview/champ_electrique&simulationview&electromag&2).
+An example of an Electric field. [See live demo](https://mecanicascience.fr/simulationview/champ_electrique&simulationview&electromag&2).
 
 ![Electric field example](imgs/example_electric_field.png)
 <br/>
