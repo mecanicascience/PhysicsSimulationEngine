@@ -67,13 +67,21 @@ class pSDrawer {
     * @return this
     */
     rect(x, y, w, h) {
-        let v0 = this.plotter.computeForXYZ(x, y);
-        let v1 = this.plotter.computeForXYZ(
-            -_pSimulationInstance.config.engine.plotter.scale.x + w,
-             _pSimulationInstance.config.engine.plotter.scale.y + h
-         );
-         rect(v0.x, v0.y, v1.x, v1.y);
-         return this;
+        let plConf = this.plotter.simulator.config.engine.plotter;
+
+        let wF = this.plotter.computeForXYZ(w - plConf.scale.x - plConf.offset.x, 0).x;
+        let hF = this.plotter.computeForXYZ(h - plConf.scale.x - plConf.offset.x, 0).x;
+
+        this.push()
+            .translate(x, y)
+            .beginShape();
+                vertex(0 ,  0 );
+                vertex(wF,  0 );
+                vertex(wF, -hF);
+                vertex(0 , -hF);
+            this.endShape(CLOSE)
+        .pop();
+        return this;
     };
 
 
@@ -136,14 +144,19 @@ class pSDrawer {
     }
 
 
+    translate(x, y) {
+        let v = this.plotter.computeForXYZ(x, y);
+        translate(v.x, v.y);
+        return this;
+    }
 
     beginShape(TYPE) {
         beginShape(TYPE);
         return this;
     }
 
-    endShape() {
-        endShape();
+    endShape(TYPE) {
+        endShape(TYPE);
         return this;
     }
 

@@ -181,7 +181,7 @@ class pSimulator {
                     draw : true,
                     color : { r : 0 , g : 0 , b : 0 }
                 },
-                squareByX       : true,
+                squareByX       : false,
                 is_3D           : false,
                 gridColor       : { r : 255, g : 255, b : 255, a : 0.3 },
         		displayGrid     : false  // true : display graph on the screen

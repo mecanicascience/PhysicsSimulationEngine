@@ -1,7 +1,7 @@
 function preRunSimulator(simulator) {
 	simulator
 		.setPreEngineConfig((engineConf) => {
-			engineConf.plotter.is_3D = true;
+			engineConf.plotter.is_3D = false;
 		})
 	;
 }
@@ -14,7 +14,8 @@ function runSimulator(simulator) {
 				y : 5,
 				z : 5
 			};
-			engineConf.plotter.displayGrid = false;
+			engineConf.plotter.squareByX = true;
+			engineConf.plotter.displayGrid = true;
 		})
 		.addObjects(Plot, 1)
 	;
