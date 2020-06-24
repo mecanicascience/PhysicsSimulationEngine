@@ -54,7 +54,7 @@ class pSPlotter {
                 .noFill()
                 .stroke(plConf.gridColor.r, plConf.gridColor.g, plConf.gridColor.b, plConf.gridColor.a + 0.3)
                 .strokeWeight(2)
-                .line(-plConf.scale.x + plConf.offset.x - 1, 0, plConf.scale.x + plConf.offset.x + 1, 0)
+                .line(-plConf.scale.x + plConf.offset.x - 1, 0, plConf.scale.x + plConf.offset.x + 1, 0);
 
 
             if(!plConf.squareByX)
@@ -100,7 +100,7 @@ class pSPlotter {
         let c = _pSimulationInstance.config.engine.plotter;
         let v = new Vector(((x * 2) / width - 1) * c.scale.x + c.offset.x);
 
-        if(!c.squareByX)
+        if(c.squareByX)
             v.y = -(((y * 2) / height - 1)           * c.scale.y - c.offset.y);
         else
             v.y = -((((y - 2 * height) * 2) / width) * c.scale.y - c.offset.y);

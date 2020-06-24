@@ -81,7 +81,7 @@ class pSDrawer {
             hF = hF.y;
 
         this.push()
-            .translate(x, y)
+            .translate(x - plConf.offset.x, y - plConf.offset.y)
             .beginShape();
                 vertex(0 ,  0 );
                 vertex(wF,  0 );

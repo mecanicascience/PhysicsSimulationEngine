@@ -9,15 +9,11 @@ function preRunSimulator(simulator) {
 function runSimulator(simulator) {
 	simulator
 		.setEngineConfig((engineConf) => {
+			engineConf.runner.movable = true;
 			engineConf.plotter.scale = {
 				x : 5,
 				y : 5,
 				z : 5
-			};
-			engineConf.plotter.offset = {
-				x : 2,
-				y : 2,
-				z : 2
 			};
 			engineConf.plotter.squareByX   = true;
 			engineConf.plotter.displayGrid = true;

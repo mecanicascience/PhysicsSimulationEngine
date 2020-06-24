@@ -31,6 +31,8 @@ class pSimulator {
         else
             this.plotter = new pSPlotter(this, new pS3DDrawer());
 
+        this.mousePos = this.plotter.computeForXYFromPixel(mouseX, mouseY);
+
         window.runSimulator(this); // main function
     }
 
@@ -59,9 +61,10 @@ class pSimulator {
         	let dt           = (currentTime - s.lastUpdateTime) / 1000;
             let critiqDt     = s.dtMoy + s.dtMoy * s.config.engine.runner.rollbackControl.maxStandardDeviation;
 
+            s.mousePos = s.plotter.computeForXYFromPixel(mouseX, mouseY);
+
             if(dt > critiqDt)
                 dt = s.dtMoy;
-
         	s.lastUpdateTime = currentTime;
         	s.plotter.update(dt * s.config.engine.runner.simulationSpeed);
 
@@ -85,6 +88,18 @@ class pSimulator {
         window.windowResized = function() {
             let p = _pSimulationInstance.getCanvasProportions(_pSimulationInstance.config.engine.window.proportions);
             resizeCanvas(p.w, p.h);
+        };
+
+        // run each time mouse is pressed
+        window.mouseDragged = function() {
+            if(!_pSimulationInstance.config.engine.runner.movable)
+                return;
+
+            let mousePos = _pSimulationInstance.plotter.computeForXYFromPixel(mouseX, mouseY);
+            if(!_pSimulationInstance.mousePos.equals(mousePos)) {
+                _pSimulationInstance.config.engine.plotter.offset.x -= mousePos.x - _pSimulationInstance.mousePos.x;
+                _pSimulationInstance.config.engine.plotter.offset.y -= mousePos.y - _pSimulationInstance.mousePos.y;
+            }
         };
     }
 
@@ -157,7 +172,8 @@ class pSimulator {
                     maxStandardDeviation : 0.8,  // maximum tick deviation percentage for the software to consider as a rollback (in seconds)
                     averageTimeSample    : 20,   // sample size for tick average (in seconds),
                     minimalUpdateFPS     : 0.15  // minimal update frames
-                }
+                },
+                is_movable : false // can the cursor move on the screen
             },
             window : {
                 proportions : {  // window height and width on relative or absolute sizes
