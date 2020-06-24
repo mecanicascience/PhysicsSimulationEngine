@@ -23,7 +23,7 @@ class pSText {
     */
     draw() {
         let drawer = _pSimulationInstance.plotter.drawer;
-        let pos    = drawer.plotter.computeForXY(this.pos.x, this.pos.y);
+        let pos    = drawer.plotter.computeForXYZ(this.pos.x, this.pos.y);
 
         push();
             translate(-this.svgImg.width / 2, -this.svgImg.height / 2);

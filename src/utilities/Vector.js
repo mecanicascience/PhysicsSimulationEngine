@@ -106,7 +106,7 @@ class Vector {
 
         this.x += x || 0;
         this.y += y || 0;
-        this.y += z || 0;
+        this.z += z || 0;
         return this;
     }
 
@@ -369,12 +369,12 @@ class Vector {
         push();
             // DRAW VECTOR
             if(initialPos != undefined) {
-                let p = plotter.computeForXY(initialPos.x, initialPos.y);
+                let p = plotter.computeForXYZ(initialPos.x, initialPos.y, initialPos.z);
                 translate(p.x - width / 2, p.y - height / 2);
             }
 
-            let zzPosition = plotter.computeForXY(0, 0);
-            let endPos     = plotter.computeForXY(pointingPos.x, pointingPos.y);
+            let zzPosition = plotter.computeForXYZ(0, 0, 0);
+            let endPos     = plotter.computeForXYZ(pointingPos.x, pointingPos.y, pointingPos.z);
 
             push();
                 plotter.drawer

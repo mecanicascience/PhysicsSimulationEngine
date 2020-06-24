@@ -13,7 +13,7 @@ class pSDrawer {
     * @return this
     */
     point(x, y) {
-        let v = this.plotter.computeForXY(x, y);
+        let v = this.plotter.computeForXYZ(x, y);
         point(v.x, v.y);
         return this;
     }
@@ -27,8 +27,8 @@ class pSDrawer {
     * @return this
     */
     line(x0, y0, x1, y1) {
-        let v0 = this.plotter.computeForXY(x0, y0);
-        let v1 = this.plotter.computeForXY(x1, y1);
+        let v0 = this.plotter.computeForXYZ(x0, y0);
+        let v1 = this.plotter.computeForXYZ(x1, y1);
         line(v0.x, v0.y, v1.x, v1.y);
         return this;
     }
@@ -42,7 +42,7 @@ class pSDrawer {
     * @return this
     */
     ellipse(x, y, rx, ry) {
-        let v = this.plotter.computeForXY(x, y);
+        let v = this.plotter.computeForXYZ(x, y);
         ellipse(v.x, v.y, rx, ry);
         return this;
     }
@@ -67,8 +67,8 @@ class pSDrawer {
     * @return this
     */
     rect(x, y, w, h) {
-        let v0 = this.plotter.computeForXY(x, y);
-        let v1 = this.plotter.computeForXY(
+        let v0 = this.plotter.computeForXYZ(x, y);
+        let v1 = this.plotter.computeForXYZ(
             -_pSimulationInstance.config.engine.plotter.scale.x + w,
              _pSimulationInstance.config.engine.plotter.scale.y + h
          );
@@ -148,7 +148,7 @@ class pSDrawer {
     }
 
     vertex(x, y) {
-        let v = this.plotter.computeForXY(x, y);
+        let v = this.plotter.computeForXYZ(x, y);
         vertex(v.x, v.y);
         return this;
     }

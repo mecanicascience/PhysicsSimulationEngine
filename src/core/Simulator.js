@@ -1,5 +1,6 @@
-import pSPlotter from './../drawer/Plotter';
-import pSDrawer  from './../drawer/Drawer';
+import pSPlotter  from './../drawer/Plotter';
+import pSDrawer   from './../drawer/Drawer';
+import pS3DDrawer from './../drawer/3DDrawer';
 
 class pSimulator {
     constructor() {
@@ -22,10 +23,15 @@ class pSimulator {
 
     /** Instanciate the pSimulator */
     instanciate() {
-        this.createP5Instance();
-        this.plotter = new pSPlotter(this, new pSDrawer());
+        window.preRunSimulator(this); // premain function
 
-        window.runSimulator(this); // start is the main function
+        this.createP5Instance();
+        if(!this.config.engine.plotter.is_3D)
+            this.plotter = new pSPlotter(this, new pSDrawer());
+        else
+            this.plotter = new pSPlotter(this, new pS3DDrawer());
+
+        window.runSimulator(this); // main function
     }
 
 
@@ -33,7 +39,12 @@ class pSimulator {
     /** Creates a new p5 instance and creates loops for the simulation */
     createP5Instance() {
         let p       = this.getCanvasProportions(this.config.engine.window.proportions);
-        this.canvas = createCanvas(p.w, p.h);
+
+        if(!this.config.engine.plotter.is_3D)
+            this.canvas = createCanvas(p.w, p.h);
+        else
+            this.canvas = createCanvas(p.w, p.h, WEBGL);
+
         this.canvas.parent(this.config.engine.runner.divId);
 
         let ru = this.config.engine.runner;
@@ -159,20 +170,32 @@ class pSimulator {
         		scale : {  // displays x relative units on each side
         			x : 10,
         			y : 10,
+                    z : 10,
         			squareByX : true
         		},
         		offset : {  // x and y relative offset
         			x : 0,
-        			y : 0
+        			y : 0,
+                    z : 0
         		},
                 backgroundColor : {
                     draw : true,
-                    color : { r : 0  , g : 0  , b : 0 }
+                    color : { r : 0 , g : 0 , b : 0 }
                 },
+                is_3D           : false,
                 gridColor       : { r : 255, g : 255, b : 255, a : 0.6 },
         		displayGrid     : true  // true : display graph on the screen
         	}
         };
+    }
+
+    /**
+    * @param configFunc The function that modifies engine configuration
+    * @return this
+    */
+    setPreEngineConfig(configFunc) {
+        configFunc(this.config.engine);
+        return this;
     }
 
     /**
