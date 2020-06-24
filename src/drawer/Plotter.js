@@ -44,7 +44,7 @@ class pSPlotter {
 
             let yS = Math.round(height / plConf.scale.y / 2);
             if(!plConf.squareByX)
-                yS = plConf.scale.y;
+                yS = plConf.scale.y ;
 
             for (let i = -plConf.scale.x - 1; i < plConf.scale.x + 1; i++)
                 for (let j = -yS - 1; j < yS + 1; j++)
@@ -54,7 +54,7 @@ class pSPlotter {
                 .noFill()
                 .stroke(plConf.gridColor.r, plConf.gridColor.g, plConf.gridColor.b, plConf.gridColor.a + 0.3)
                 .strokeWeight(2)
-                .line(-plConf.scale.x - 1, 0, plConf.scale.x + 1, 0)
+                .line(-plConf.scale.x + plConf.offset.x - 1, 0, plConf.scale.x + plConf.offset.x + 1, 0)
 
 
             if(!plConf.squareByX)
@@ -76,7 +76,7 @@ class pSPlotter {
     computeForXYZ(xRel, yRel, zRel) {
         let c = this.simulator.config.engine.plotter;
         let v = new Vector(
-            ((xRel + c.offset.x) / c.scale.x + 1)  * width / 2,
+            ((xRel - c.offset.x) / c.scale.x + 1)  * width / 2,
             0,
             ((xRel + c.offset.z) / c.scale.z + 1)  * width / 2
         );
@@ -98,7 +98,7 @@ class pSPlotter {
     */
     computeForXYFromPixel(x, y) {
         let c = _pSimulationInstance.config.engine.plotter;
-        let v = new Vector(((x * 2) / width - 1) * c.scale.x - c.offset.x);
+        let v = new Vector(((x * 2) / width - 1) * c.scale.x + c.offset.x);
 
         if(!c.squareByX)
             v.y = -(((y * 2) / height - 1)           * c.scale.y - c.offset.y);

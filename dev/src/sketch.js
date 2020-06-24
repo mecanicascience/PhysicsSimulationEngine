@@ -14,7 +14,12 @@ function runSimulator(simulator) {
 				y : 5,
 				z : 5
 			};
-			engineConf.plotter.squareByX = true;
+			engineConf.plotter.offset = {
+				x : 0,
+				y : 0,
+				z : 2
+			};
+			engineConf.plotter.squareByX = false;
 			engineConf.plotter.displayGrid = true;
 		})
 		.addObjects(Plot, 1)
