@@ -10,7 +10,8 @@ class Plot {
     draw(drawer) {
         drawer
             .stroke(255, 0, 0)
-            .strokeWeight(3);
+            .strokeWeight(3)
+            .cylinder(5, 5, 5, 10, 10);
 
         this.vec.draw();
     }

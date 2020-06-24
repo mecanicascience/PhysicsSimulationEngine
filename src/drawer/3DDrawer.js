@@ -31,22 +31,60 @@ class pS3DDrawer {
     }
 
     sphere(x, y, z, r) {
-        let v = this.plotter.computeForXYZ(x, y, z);
+        let v0 = this.plotter.computeForXYZ(x, y, z);
+        let v1 = this.plotter.computeForXYZ(r, 0, 0);
 
         push();
-            translate(v.x, v.y, v.z);
-            sphere(r);
+            translate(v0.x, v0.y, v0.z);
+            sphere(v1.x);
         pop();
 
         return this;
     }
 
     cone(x, y, z, r, h) {
-        let v = this.plotter.computeForXYZ(x, y, z);
+        let v0 = this.plotter.computeForXYZ(x, y, z);
+        let v1 = this.plotter.computeForXYZ(r, h, 0);
 
         push();
-            translate(v.x, v.y, v.z);
-            cone(r, h);
+            translate(v0.x, v0.y, v0.z);
+            cone(v1.x, v1.y);
+        pop();
+
+        return this;
+    }
+
+    box(x, y, z, w, h) {
+        let v0 = this.plotter.computeForXYZ(x, y, z);
+        let v1 = this.plotter.computeForXYZ(w, h, 0);
+
+        push();
+            translate(v0.x, v0.y, v0.z);
+            box(v1.x, v1.y);
+        pop();
+
+        return this;
+    }
+
+    cylinder(x, y, z, r, h) {
+        let v0 = this.plotter.computeForXYZ(x, y, z);
+        let v1 = this.plotter.computeForXYZ(r, h, 0);
+
+        push();
+            translate(v0.x, v0.y, v0.z);
+            cylinder(v1.x, v1.y);
+        pop();
+
+        return this;
+    }
+
+    plane(x, y, z, w, h) {
+        let v0 = this.plotter.computeForXYZ(x, y, z);
+        let v1 = this.plotter.computeForXYZ(w, h, 0);
+
+        push();
+            translate(v0.x, v0.y, v0.z);
+            plane(v1.x, v1.y);
         pop();
 
         return this;
