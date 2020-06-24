@@ -1,4 +1,3 @@
-
 class pSObject {
    constructor(x0, y0, v0) {
       this.pos = new Vector(x0, y0);

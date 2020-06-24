@@ -11,6 +11,7 @@ import pSTriangle from './drawer/objects/Triangle';
 // Root
 import Animation  from './drawer/Animation';
 import pSDrawer   from './drawer/Drawer';
+import pS3DDrawer from './drawer/3DDrawer';
 import pSPlotter  from './drawer/Plotter';
 
 // ==== Utilities ====

@@ -39,7 +39,7 @@ class pSPlotter {
         // Draw the grid
         if(this.simulator.config.engine.plotter.displayGrid) {
             /** @TODO To be implemented */
-            let centerPos = this.computeForXY(0, 0);
+            let centerPos = this.computeForXYZ(0, 0, 0);
             this.drawer
                 .noStroke()
                 .fill(plConf.gridColor.r, plConf.gridColor.g, plConf.gridColor.b, plConf.gridColor.a)
@@ -53,11 +53,16 @@ class pSPlotter {
     * Compute the X and Y pixel position based on the drawing parameters
     * @param xRel X relative position
     * @param yRel Y relative position
-    * @return {X, Y} object
+    * @param zRel Z relative position
+    * @return {X, Y, Z} object
     */
-    computeForXY(xRel, yRel) {
+    computeForXYZ(xRel, yRel, zRel) {
         let c = this.simulator.config.engine.plotter;
-        let v = new Vector(((xRel + c.offset.x) / c.scale.x + 1)  * width / 2);
+        let v = new Vector(
+            ((xRel + c.offset.x) / c.scale.x + 1)  * width / 2,
+            0,
+            ((xRel + c.offset.z) / c.scale.z + 1)  * width / 2
+        );
 
         if(!c.scale.squareByX)
             v.y = ((-yRel + c.offset.y) / c.scale.y + 1) * height / 2;
