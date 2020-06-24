@@ -5,7 +5,7 @@ function runSimulator(simulator) {
 				x: 5,
 				y: 5,
 			};
-			engineConf.plotter.displayGrid = false;
+			engineConf.runner.movable = true;
 		})
 		.setCustomConfig((customConf) => {
 			customConf.drawSizeMultiplier = 10;

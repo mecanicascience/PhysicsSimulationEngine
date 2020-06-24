@@ -40,6 +40,8 @@ class pSObject {
       drawer
           .noStroke()
           .fill(this.color.r, this.color.g, this.color.b)
-          .ellipse(this.pos.x, this.pos.y, 5, 5);
+          .ellipse(this.pos.x, this.pos.y, 5, 5)
+          .noFill()
+          .stroke(255);
    }
 }

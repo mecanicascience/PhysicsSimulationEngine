@@ -2,9 +2,9 @@ function runSimulator(simulator) {
 	simulator
 		.setEngineConfig((engineConf) => {
 			engineConf.plotter.scale = { x: 3*10e11, y: 3*10e11 };
+			engineConf.plotter.squareByX = true;
 			engineConf.runner.simulationSpeed = 5 * 10e5;
-
-			engineConf.plotter.displayGrid = false;
+			engineConf.runner.movable = true;
 		})
 		.addObjects(NBody, 1, 3.3e23, 0, 4.7e10, 5.9e4, 0, [241, 203, 131], "Mercure")
 		.addObjects(NBody, 1, 4.9e24, 0, 1.1e11, 3.5e4, 0, [243, 223, 107], "Venus")
