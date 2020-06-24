@@ -19,7 +19,7 @@ function runSimulator(simulator) {
 				y : 2,
 				z : 2
 			};
-			engineConf.plotter.squareByX = false;
+			engineConf.plotter.squareByX   = true;
 			engineConf.plotter.displayGrid = true;
 		})
 		.addObjects(Plot, 1)
