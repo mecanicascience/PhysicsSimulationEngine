@@ -23,7 +23,9 @@ class pSimulator {
 
     /** Instanciate the pSimulator */
     instanciate() {
-        window.preRunSimulator(this); // premain function
+        try {
+            window.preRunSimulator(this); // premain function
+        } catch(e) {} // not found
 
         this.createP5Instance();
         if(!this.config.engine.plotter.is_3D)
