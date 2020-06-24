@@ -70,7 +70,15 @@ class pSDrawer {
         let plConf = this.plotter.simulator.config.engine.plotter;
 
         let wF = this.plotter.computeForXYZ(w - plConf.scale.x + plConf.offset.x, 0).x;
-        let hF = this.plotter.computeForXYZ(h - plConf.scale.x + plConf.offset.x, 0).x;
+        let hF = this.plotter.computeForXYZ(
+            h - plConf.scale.x + plConf.offset.x,
+            h - plConf.scale.y + plConf.offset.y
+        );
+
+        if(plConf.squareByX)
+            hF = hF.x;
+        else
+            hF = hF.y;
 
         this.push()
             .translate(x, y)

@@ -15,8 +15,8 @@ function runSimulator(simulator) {
 				z : 5
 			};
 			engineConf.plotter.offset = {
-				x : 0,
-				y : 0,
+				x : 2,
+				y : 2,
 				z : 2
 			};
 			engineConf.plotter.squareByX = false;

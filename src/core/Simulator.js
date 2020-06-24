@@ -38,7 +38,7 @@ class pSimulator {
 
     /** Creates a new p5 instance and creates loops for the simulation */
     createP5Instance() {
-        let p       = this.getCanvasProportions(this.config.engine.window.proportions);
+        let p = this.getCanvasProportions(this.config.engine.window.proportions);
 
         if(!this.config.engine.plotter.is_3D)
             this.canvas = createCanvas(p.w, p.h);

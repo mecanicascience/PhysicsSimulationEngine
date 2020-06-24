@@ -44,7 +44,7 @@ class pSPlotter {
 
             let yS = Math.round(height / plConf.scale.y / 2);
             if(!plConf.squareByX)
-                yS = plConf.scale.y ;
+                yS = plConf.scale.y;
 
             for (let i = -plConf.scale.x - 1; i < plConf.scale.x + 1; i++)
                 for (let j = -yS - 1; j < yS + 1; j++)
