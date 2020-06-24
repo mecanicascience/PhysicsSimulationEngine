@@ -28,8 +28,10 @@ class pSimulator {
         } catch(e) {} // not found
 
         this.createP5Instance();
-        if(!this.config.engine.plotter.is_3D)
+        if(!this.config.engine.plotter.is_3D) {
+            setAttributes('antialias', true);
             this.plotter = new pSPlotter(this, new pSDrawer());
+        }
         else
             this.plotter = new pSPlotter(this, new pS3DDrawer());
 

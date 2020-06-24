@@ -361,20 +361,87 @@ class Vector {
     * @param strokeWeight Stroke weight of the Vector in pixels (default = 1 px)
     */
     static draw(initialPos, pointingPos, color = 'rgb(255, 255, 255)', headSize = 5, strokeW = 1) {
-        if((initialPos != undefined && initialPos.z != 0) || pointingPos.z != 0)
-            console.warn("Vector drawing is only implemented in 2D yet.");
-
         let plotter = _pSimulationInstance.plotter;
 
-        push();
-            // DRAW VECTOR
-            if(initialPos != undefined) {
-                let p = plotter.computeForXYZ(initialPos.x, initialPos.y, initialPos.z);
-                translate(p.x - width / 2, p.y - height / 2);
-            }
+        if(!_pSimulationInstance.config.engine.plotter.is_3D) {
+            if((initialPos != undefined && initialPos.z != 0) || pointingPos.z != 0)
+                console.warn("Vector drawing is only avaliable with 'is_3D' at true value.");
 
-            let zzPosition = plotter.computeForXYZ(0, 0, 0);
-            let endPos     = plotter.computeForXYZ(pointingPos.x, pointingPos.y, pointingPos.z);
+            push();
+                // DRAW VECTOR
+                if(initialPos != undefined) {
+                    let p = plotter.computeForXYZ(initialPos.x, initialPos.y, initialPos.z);
+                    translate(p.x - width / 2, p.y - height / 2);
+                }
+
+                let zzPosition = plotter.computeForXYZ(0, 0, 0);
+                let endPos     = plotter.computeForXYZ(pointingPos.x, pointingPos.y, pointingPos.z);
+
+                push();
+                    plotter.drawer
+                        .stroke(color)
+                        .strokeWeight(strokeW)
+                        .fill(color);
+
+                    line(zzPosition.x, zzPosition.y, endPos.x, endPos.y);
+                    translate(endPos.x, endPos.y);
+
+                    rotate(endPos.sub(zzPosition).getAngle());
+                    translate(-headSize - 2, 0);
+                    triangle(0, headSize / 2, 0, -headSize / 2, headSize, 0);
+            	pop();
+
+
+                // DRAW VECTOR NAME
+                if(pointingPos.name != undefined) {
+                    // Offset of the text based on the angle on the unit circle
+                    let angle = pointingPos.getAngle();
+                    if(angle < 0)
+                        angle += 2*PI;
+
+                    let xOffset = 0.8 * pointingPos.name.cWidth;
+                    if(    (PI/4   < angle && angle <= PI/2  )
+                        || (3*PI/4 < angle && angle <= 5*PI/4)
+                        || (3*PI/2 < angle && angle <= 7*PI/4)
+                    ) xOffset *= -1;
+
+                    let yOffset = -1.1 * pointingPos.name.desc + 1.1 * pointingPos.name.asc;
+                    if(    (PI/4   < angle && angle <=   PI/2)
+                        || (PI/2   < angle && angle <= 3*PI/4)
+                        || (PI     < angle && angle <= 5*PI/4)
+                        || (7*PI/4 < angle && angle <=   2*PI)
+                    ) yOffset *= -1;
+
+                    pointingPos.name
+                        .setColor(color)
+                        .setPosition(pointingPos.x / 2, pointingPos.y / 2)
+                        .setOffset(xOffset, yOffset)
+                        .draw(plotter.drawer);
+
+
+                    // ARROW ON TOP
+                    let arrowOrPos = plotter.computeForXY(pointingPos.x / 2, pointingPos.y / 2);
+                    plotter.drawer
+                        .stroke(color)
+                        .strokeWeight(strokeW)
+                        .fill(color);
+
+                    translate(
+                        arrowOrPos.x + xOffset - pointingPos.name.cWidth / 2,
+                        arrowOrPos.y + yOffset - pointingPos.name.asc
+                    );
+                    line(0, 0, pointingPos.name.cWidth, 0);
+
+                    // Triangle
+                    push();
+                        translate(headSize + pointingPos.name.cWidth / 1.5, 0);
+                        triangle(0, headSize / 4, 0, -headSize / 4, headSize / 2, 0);
+                    pop();
+                }
+            pop();
+        }
+        else {
+            headSize /= 3;
 
             push();
                 plotter.drawer
@@ -382,62 +449,47 @@ class Vector {
                     .strokeWeight(strokeW)
                     .fill(color);
 
-                line(zzPosition.x, zzPosition.y, endPos.x, endPos.y);
-                translate(endPos.x, endPos.y);
+                // DRAW VECTOR
+                if(initialPos != undefined)
+                    plotter.drawer.translate(initialPos.x, initialPos.y, initialPos.z);
+                plotter.drawer.line(0, 0, 0, pointingPos.x, pointingPos.y, pointingPos.z);
 
-                rotate(endPos.sub(zzPosition).getAngle());
-                translate(-headSize - 2, 0);
-                triangle(0, headSize / 2, 0, -headSize / 2, headSize, 0);
-        	pop();
+                // DRAW VECTOR NAME
+                // if(pointingPos.name != undefined) {
+                //     text(pointingPos.x, pointingPos.y, pointingPos.z);
+                // }
 
-
-            // DRAW VECTOR NAME
-            if(pointingPos.name != undefined) {
-                // Offset of the text based on the angle on the unit circle
-                let angle = pointingPos.getAngle();
-                if(angle < 0)
-                    angle += 2*PI;
-
-                let xOffset = 0.8 * pointingPos.name.cWidth;
-                if(    (PI/4   < angle && angle <= PI/2  )
-                    || (3*PI/4 < angle && angle <= 5*PI/4)
-                    || (3*PI/2 < angle && angle <= 7*PI/4)
-                ) xOffset *= -1;
-
-                let yOffset = -1.1 * pointingPos.name.desc + 1.1 * pointingPos.name.asc;
-                if(    (PI/4   < angle && angle <=   PI/2)
-                    || (PI/2   < angle && angle <= 3*PI/4)
-                    || (PI     < angle && angle <= 5*PI/4)
-                    || (7*PI/4 < angle && angle <=   2*PI)
-                ) yOffset *= -1;
-
-                pointingPos.name
-                    .setColor(color)
-                    .setPosition(pointingPos.x / 2, pointingPos.y / 2)
-                    .setOffset(xOffset, yOffset)
-                    .draw(plotter.drawer);
-
-
-                // ARROW ON TOP
-                let arrowOrPos = plotter.computeForXY(pointingPos.x / 2, pointingPos.y / 2);
-                plotter.drawer
-                    .stroke(color)
-                    .strokeWeight(strokeW)
-                    .fill(color);
-
-                translate(
-                    arrowOrPos.x + xOffset - pointingPos.name.cWidth / 2,
-                    arrowOrPos.y + yOffset - pointingPos.name.asc
-                );
-                line(0, 0, pointingPos.name.cWidth, 0);
-
-                // Triangle
-                push();
-                    translate(headSize + pointingPos.name.cWidth / 1.5, 0);
-                    triangle(0, headSize / 4, 0, -headSize / 4, headSize / 2, 0);
-                pop();
-            }
-        pop();
+                // let xaxis = Vector.cross(new Vector(0, 1, 0), pointingPos);
+                // xaxis.normalize();
+                //
+                // let yaxis = Vector.cross(pointingPos, xaxis);
+                // yaxis.normalize();
+                //
+                // // Calculate rotation matrix
+                // let M = [[], [], []];
+                // M[0][0] = xaxis.x;
+                // M[0][1] = yaxis.x;
+                // M[0][2] = pointingPos.x;
+                //
+                // M[1][0] = xaxis.y;
+                // M[1][1] = yaxis.y;
+                // M[1][2] = pointingPos.y;
+                //
+                // M[2][0] = xaxis.z;
+                // M[2][1] = yaxis.z;
+                // M[2][2] = pointingPos.z;
+                //
+                // // Calculate Euler angles
+                // let theta1, theta2, theta, psy1, psy2, psy, phi1, phi2, phi;
+                // if (M[3][1] != -1 && M[3][1] != 1) {
+                //     theta1 = -Math.arcsin(M[3][1]);
+                //     theta2 = Math.PI - theta1;
+                //     psy1 = Math.atan2(M[3][2] / Math.cos(theta1))
+                // }
+                //
+                // cone(headSize * 3, headSize * 7);
+            pop();
+        }
 
         return this;
     }

@@ -18,6 +18,11 @@ class pSPlotter {
     * @param dt Delta time since last update (in seconds)
     */
     update(dt) {
+        if(this.simulator.config.engine.plotter.is_3D) {
+            lights();
+            orbitControl(5, 5);
+        }
+
         for (let i = 0; i < this.objectsL.length; i++)
             this.objectsL[i].update(dt, this.objectsL);
     }
@@ -37,31 +42,41 @@ class pSPlotter {
 
         // Draw the grid
         if(this.simulator.config.engine.plotter.displayGrid) {
-            this.drawer
-                .noFill()
-                .stroke(plConf.gridColor.r, plConf.gridColor.g, plConf.gridColor.b, plConf.gridColor.a)
-                .strokeWeight(0.5);
+            if(this.simulator.config.engine.plotter.is_3D) {
+                debugMode(100, 10, 0, 0, 0, 20, 0, -40, 0);
+            }
+            else {
+                this.drawer
+                    .noFill()
+                    .stroke(plConf.gridColor.r, plConf.gridColor.g, plConf.gridColor.b, plConf.gridColor.a)
+                    .strokeWeight(0.5);
 
-            let yS = Math.round(height / plConf.scale.y / 2);
-            if(!plConf.squareByX)
-                yS = plConf.scale.y;
+                let yS = Math.round(height / plConf.scale.y / 2);
+                if(!plConf.squareByX)
+                    yS = plConf.scale.y;
 
-            for (let i = -plConf.scale.x - 1; i < plConf.scale.x + 1; i++)
-                for (let j = -yS - 1; j < yS + 1; j++)
-                    this.drawer.rect(i + plConf.offset.x, j + plConf.offset.y, 1, 1);
+                for (let i = -plConf.scale.x - 1; i < plConf.scale.x + 1; i++)
+                    for (let j = -yS - 1; j < yS + 1; j++)
+                        this.drawer.rect(i + plConf.offset.x, j + plConf.offset.y, 1, 1);
 
-            this.drawer
-                .noFill()
-                .stroke(plConf.gridColor.r, plConf.gridColor.g, plConf.gridColor.b, plConf.gridColor.a + 0.3)
-                .strokeWeight(2)
-                .line(-plConf.scale.x + plConf.offset.x - 1, 0, plConf.scale.x + plConf.offset.x + 1, 0);
+                this.drawer
+                    .noFill()
+                    .stroke(plConf.gridColor.r, plConf.gridColor.g, plConf.gridColor.b, plConf.gridColor.a + 0.3)
+                    .strokeWeight(2)
+                    .line(-plConf.scale.x + plConf.offset.x - 1, 0, plConf.scale.x + plConf.offset.x + 1, 0);
 
 
-            if(!plConf.squareByX)
-                this.drawer.line(0, -plConf.scale.y - 1, 0, plConf.scale.y + 1);
-            else
-                this.drawer.line(0, -yS - 1, 0, yS + 1);
+                if(!plConf.squareByX)
+                    this.drawer.line(0, -plConf.scale.y - 1, 0, plConf.scale.y + 1);
+                else
+                    this.drawer.line(0, -yS - 1, 0, yS + 1);
+            }
         }
+
+        this.drawer
+            .noFill()
+            .stroke(plConf.gridColor.r, plConf.gridColor.g, plConf.gridColor.b, plConf.gridColor.a)
+            .strokeWeight(0.5);
     }
 
 
@@ -75,18 +90,31 @@ class pSPlotter {
     */
     computeForXYZ(xRel, yRel, zRel) {
         let c = this.simulator.config.engine.plotter;
-        let v = new Vector(
-            ((xRel - c.offset.x) / c.scale.x + 1)  * width / 2,
-            0,
-            ((xRel + c.offset.z) / c.scale.z + 1)  * width / 2
-        );
+        if (!c.is_3D) {
+            let v = new Vector(
+                ((xRel - c.offset.x) / c.scale.x + 1)  * width / 2,
+                0,
+                ((xRel + c.offset.z) / c.scale.z + 1)  * width / 2
+            );
 
-        if(!c.squareByX)
-            v.y = ((-yRel + c.offset.y) / c.scale.y + 1) * height / 2;
-        else
-            v.y = ((-yRel + c.offset.y) / c.scale.x)     * width  / 2 + height / 2;
+            if(!c.squareByX)
+                v.y = ((-yRel + c.offset.y) / c.scale.y + 1) * height / 2;
+            else
+                v.y = ((-yRel + c.offset.y) / c.scale.x)     * width  / 2 + height / 2;
 
-        return v;
+            return v;
+        }
+        else {
+            // 360 x 360 : grid size
+            let fac = 180 * 0.28;
+            let v = new Vector(
+                (( xRel + c.offset.x) / c.scale.x) * fac,
+                ((-yRel + c.offset.y) / c.scale.y) * fac,
+                (( zRel + c.offset.z) / c.scale.z) * fac
+            );
+
+            return v;
+        }
     }
 
 
