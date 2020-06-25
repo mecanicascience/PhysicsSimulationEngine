@@ -86,15 +86,27 @@ class pSPlotter {
     * @param xRel X relative position
     * @param yRel Y relative position
     * @param zRel Z relative position
+    * @param useOffset Calculate with simulation offsets (default : true)
     * @return {X, Y, Z} object
     */
-    computeForXYZ(xRel, yRel, zRel) {
+    computeForXYZ(xRel, yRel, zRel, useOffset = true) {
         let c = this.simulator.config.engine.plotter;
-        if (!c.is_3D) {
+
+        if(!useOffset && !c.is_3D && c.squareByX) {
+            let v0 = this.computeForXYZ(0, 0, 0);
+            let v1 = this.computeForXYZ(xRel, yRel, zRel);
+
+            return new Vector(
+                v1.x - v0.x,
+                v1.y - v0.y,
+                v1.z - v0.z
+            );
+        }
+        else if (!c.is_3D) {
             let v = new Vector(
-                ((xRel - c.offset.x) / c.scale.x + 1)  * width / 2,
+                ((xRel - c.offset.x) / c.scale.x + 1) * width / 2,
                 0,
-                ((xRel + c.offset.z) / c.scale.z + 1)  * width / 2
+                ((xRel + c.offset.z) / c.scale.z + 1) * width / 2
             );
 
             if(!c.squareByX)

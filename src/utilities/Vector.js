@@ -59,7 +59,7 @@ class Vector {
         if(name instanceof pSText)
             this.name = name;
         else
-            this.name = new pSText(name, new Vector(this.x, this.y, this.z));
+            this.name = new pSText(name, this);
 
         return this;
     }
@@ -348,7 +348,7 @@ class Vector {
         if(initialPos != undefined)
             Vector.draw(initialPos, this, this.color, headSize, strokeWeight);
         else
-            Vector.draw(undefined , this, this.color);
+            Vector.draw(undefined , this, this.color, headSize, strokeWeight);
     }
 
     /**
@@ -360,36 +360,33 @@ class Vector {
     * @param headSize Size of the head in pixels (default = 5 px)
     * @param strokeWeight Stroke weight of the Vector in pixels (default = 1 px)
     */
-    static draw(initialPos, pointingPos, color = 'rgb(255, 255, 255)', headSize = 5, strokeW = 1) {
+    static draw(initialPos = new Vector(), pointingPos, color = 'rgb(255, 255, 255)', headSize = 5, strokeW = 1) {
         let plotter = _pSimulationInstance.plotter;
 
         if(!_pSimulationInstance.config.engine.plotter.is_3D) {
-            if((initialPos != undefined && initialPos.z != 0) || pointingPos.z != 0)
-                console.warn("Vector drawing is only avaliable with 'is_3D' at true value.");
-
             push();
                 // DRAW VECTOR
-                if(initialPos != undefined) {
-                    let p = plotter.computeForXYZ(initialPos.x, initialPos.y, initialPos.z);
-                    translate(p.x - width / 2, p.y - height / 2);
-                }
-
-                let zzPosition = plotter.computeForXYZ(0, 0, 0);
-                let endPos     = plotter.computeForXYZ(pointingPos.x, pointingPos.y, pointingPos.z);
-
-                push();
-                    plotter.drawer
+                plotter.drawer
                         .stroke(color)
                         .strokeWeight(strokeW)
-                        .fill(color);
+                        .fill(color)
+                        .line(
+                            initialPos.x,
+                            initialPos.y,
+                            initialPos.x + pointingPos.x,
+                            initialPos.y + pointingPos.y
+                        );
 
-                    line(zzPosition.x, zzPosition.y, endPos.x, endPos.y);
+                push();
+                    let zzPosition = plotter.computeForXYZ(0, 0, 0);
+                    let endPos     = plotter.computeForXYZ(pointingPos.x, pointingPos.y, pointingPos.z);
+
                     translate(endPos.x, endPos.y);
 
                     rotate(endPos.sub(zzPosition).getAngle());
                     translate(-headSize - 2, 0);
                     triangle(0, headSize / 2, 0, -headSize / 2, headSize, 0);
-            	pop();
+                pop();
 
 
                 // DRAW VECTOR NAME
@@ -399,13 +396,13 @@ class Vector {
                     if(angle < 0)
                         angle += 2*PI;
 
-                    let xOffset = 0.8 * pointingPos.name.cWidth;
+                    let xOffset = 0.01 * pointingPos.name.svgImg.width;
                     if(    (PI/4   < angle && angle <= PI/2  )
                         || (3*PI/4 < angle && angle <= 5*PI/4)
                         || (3*PI/2 < angle && angle <= 7*PI/4)
                     ) xOffset *= -1;
 
-                    let yOffset = -1.1 * pointingPos.name.desc + 1.1 * pointingPos.name.asc;
+                    let yOffset = 0;
                     if(    (PI/4   < angle && angle <=   PI/2)
                         || (PI/2   < angle && angle <= 3*PI/4)
                         || (PI     < angle && angle <= 5*PI/4)
@@ -414,29 +411,7 @@ class Vector {
 
                     pointingPos.name
                         .setColor(color)
-                        .setPosition(pointingPos.x / 2, pointingPos.y / 2)
-                        .setOffset(xOffset, yOffset)
-                        .draw(plotter.drawer);
-
-
-                    // ARROW ON TOP
-                    let arrowOrPos = plotter.computeForXY(pointingPos.x / 2, pointingPos.y / 2);
-                    plotter.drawer
-                        .stroke(color)
-                        .strokeWeight(strokeW)
-                        .fill(color);
-
-                    translate(
-                        arrowOrPos.x + xOffset - pointingPos.name.cWidth / 2,
-                        arrowOrPos.y + yOffset - pointingPos.name.asc
-                    );
-                    line(0, 0, pointingPos.name.cWidth, 0);
-
-                    // Triangle
-                    push();
-                        translate(headSize + pointingPos.name.cWidth / 1.5, 0);
-                        triangle(0, headSize / 4, 0, -headSize / 4, headSize / 2, 0);
-                    pop();
+                        .draw(pointingPos.name.pos.copy().div(2).add(xOffset, yOffset));
                 }
             pop();
         }

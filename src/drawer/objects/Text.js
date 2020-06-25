@@ -20,10 +20,15 @@ class pSText {
 
     /**
     * Draw the text to the screen
+    * @param posOpt Force text position
     */
-    draw() {
+    draw(posOpt) {
         let drawer = _pSimulationInstance.plotter.drawer;
-        let pos    = drawer.plotter.computeForXYZ(this.pos.x, this.pos.y);
+
+        let pos = drawer.plotter.computeForXYZ(this.pos.x, this.pos.y);
+        if(posOpt != undefined)
+            pos = drawer.plotter.computeForXYZ(posOpt.x, posOpt.y);
+
 
         push();
             translate(-this.svgImg.width / 2, -this.svgImg.height / 2);

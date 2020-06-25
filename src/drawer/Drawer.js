@@ -39,11 +39,26 @@ class pSDrawer {
     * @param y Y center simulation coordinate
     * @param rx X ellipse radius
     * @param ry Y ellipse radius
+    * @param abs Are rx and ry in pixels (default false)
     * @return this
     */
-    ellipse(x, y, rx, ry) {
-        let v = this.plotter.computeForXYZ(x, y);
-        ellipse(v.x, v.y, rx, ry);
+    ellipse(x, y, rx, ry, abs = false) {
+        let v0 = this.plotter.computeForXYZ(x, y);
+
+        if(ry == undefined)
+            ry = rx;
+
+        if(!abs) {
+            let v1 = this.plotter.computeForXYZ(rx, ry, 0, false);
+
+            push();
+                this.translate(x, y);
+                ellipse(0, 0, v1.x * 2, v1.y * 2);
+            pop();
+        }
+        else
+            ellipse(v0.x, v0.y, rx, ry);
+        
         return this;
     }
 
@@ -52,10 +67,11 @@ class pSDrawer {
     * @param x X center simulation coordinate
     * @param y Y center simulation coordinate
     * @param r Circle radius
+    * @param abs Is r in pixels (default false)
     * @return this
     */
-    circle(x, y, r) {
-    	return this.ellipse(x, y, r, r);
+    circle(x, y, r, abs = false) {
+    	return this.ellipse(x, y, r, r, abs);
     }
 
     /**
@@ -64,33 +80,23 @@ class pSDrawer {
     * @param y Y bottom left simulation coordinate
     * @param w Rectangle width
     * @param h Rectangle height
+    * @param abs Are w and h in pixels (default false)
     * @return this
     */
-    rect(x, y, w, h) {
-        let plConf = this.plotter.simulator.config.engine.plotter;
+    rect(x, y, w, h, abs = false) {
+        if(!abs)
+            return this.beginShape()
+                    .vertex(x + w, y)
+                    .vertex(x + w, y + h)
+                    .vertex(x    , y + h)
+                    .vertex(x    , y)
+                .endShape(CLOSE);
 
-        let wF = this.plotter.computeForXYZ(w - plConf.scale.x + plConf.offset.x, 0).x;
-        let hF = this.plotter.computeForXYZ(
-            h - plConf.scale.x + plConf.offset.x,
-            h - plConf.scale.y + plConf.offset.y
-        );
+        let v = this.plotter.computeForXYZ(x, y);
+        rect(v.x, v.y, w, h);
 
-        if(plConf.squareByX)
-            hF = hF.x;
-        else
-            hF = hF.y;
-
-        this.push()
-            .translate(x - plConf.offset.x, y - plConf.offset.y)
-            .beginShape();
-                vertex(0 ,  0 );
-                vertex(wF,  0 );
-                vertex(wF, -hF);
-                vertex(0 , -hF);
-            this.endShape(CLOSE)
-        .pop();
         return this;
-    };
+    }
 
 
 
