@@ -6,8 +6,8 @@ class Plot {
     }
 
     update(dt) {
-        this.vec.x = Math.cos(this.theta)
-        this.vec.y = Math.sin(this.theta);
+        this.vec.x = 2 * Math.cos(this.theta)
+        this.vec.y = 2 * Math.sin(this.theta);
 
         this.theta += 0.01;
     }
@@ -18,6 +18,6 @@ class Plot {
             .strokeWeight(3)
             .rect(0, 0, 1, 2);
 
-        this.vec.draw();
+        this.vec.draw(new Vector(1, 1));
     }
 }

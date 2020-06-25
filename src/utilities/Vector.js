@@ -20,7 +20,7 @@ class Vector {
 
         this.color = color;
 
-        this.setName(name);
+        this.setName(name, color);
     }
 
 
@@ -50,16 +50,17 @@ class Vector {
     /**
     * Set vector name
     * @param name New name of the Vector
+    * @param color Color of the Vector name
     * @return this
     */
-    setName(name) {
+    setName(name, color) {
         if(name == undefined)
             return this;
 
         if(name instanceof pSText)
             this.name = name;
         else
-            this.name = new pSText(name, this);
+            this.name = new pSText(name, this, 1.3, color);
 
         return this;
     }
@@ -377,6 +378,10 @@ class Vector {
                             initialPos.y + pointingPos.y
                         );
 
+
+                let v0 = plotter.computeForXYZ(initialPos.x, initialPos.y, initialPos.z, false);
+                translate(v0.x, v0.y);
+
                 push();
                     let zzPosition = plotter.computeForXYZ(0, 0, 0);
                     let endPos     = plotter.computeForXYZ(pointingPos.x, pointingPos.y, pointingPos.z);
@@ -402,7 +407,7 @@ class Vector {
                         || (3*PI/2 < angle && angle <= 7*PI/4)
                     ) xOffset *= -1;
 
-                    let yOffset = 0;
+                    let yOffset = 0.01 * pointingPos.name.svgImg.height;
                     if(    (PI/4   < angle && angle <=   PI/2)
                         || (PI/2   < angle && angle <= 3*PI/4)
                         || (PI     < angle && angle <= 5*PI/4)
