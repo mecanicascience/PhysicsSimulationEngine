@@ -10,17 +10,18 @@ class Vector {
     * @param x X coordinate
     * @param y Y coordinate
     * @param color Color of the Vector 'rgba(R, G, B, A)'
-    * @param name Name of the Vector to be potentially displayed (@see draw method)
+    * @param name Name of the Vector potentially displayed (@see draw method)
+    * @param nameSize Text size of the name of the Vector (default 1.3)
     * @return this
     */
-    constructor(x, y, z, color = 'rgb(255, 255, 255)', name) {
+    constructor(x, y, z, color = 'rgb(255, 255, 255)', name, nameSize = 1.3) {
         this.x    = x || 0;
         this.y    = y || 0;
         this.z    = z || 0;
 
         this.color = color;
 
-        this.setName(name, color);
+        this.setName(name, color, nameSize);
     }
 
 
@@ -51,16 +52,17 @@ class Vector {
     * Set vector name
     * @param name New name of the Vector
     * @param color Color of the Vector name
+    * @param nameSize Text size of the name of the Vector (default 1.3)
     * @return this
     */
-    setName(name, color) {
+    setName(name, color, nameSize = 1.3) {
         if(name == undefined)
             return this;
 
         if(name instanceof pSText)
             this.name = name;
         else
-            this.name = new pSText(name, this, 1.3, color);
+            this.name = new pSText(name, this, nameSize, color);
 
         return this;
     }

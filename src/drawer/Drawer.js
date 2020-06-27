@@ -34,6 +34,26 @@ class pSDrawer {
     }
 
     /**
+    * Set and add line dash type
+    * @param dashSize Size of the dashes (default 5)
+    * @param dashSpacing Space between the dashes (default 5)
+    * @return this
+    */
+    setLineDash(dashSize = 5, dashSpacing = 5) {
+        drawingContext.setLineDash([dashSize, dashSpacing]);
+        return this;
+    }
+
+    /**
+    * Clear the line dashing
+    * @return this
+    */
+    clearLineDash() {
+        drawingContext.setLineDash([]);
+        return this;
+    }
+
+    /**
     * Draw an ellipse
     * @param x X center simulation coordinate
     * @param y Y center simulation coordinate
@@ -71,7 +91,7 @@ class pSDrawer {
     * @return this
     */
     circle(x, y, r, abs = false) {
-    	return this.ellipse(x, y, r, r, abs);
+        return this.ellipse(x, y, r, r, abs);
     }
 
     /**
@@ -95,6 +115,21 @@ class pSDrawer {
         let v = this.plotter.computeForXYZ(x, y);
         rect(v.x, v.y, w, h);
 
+        return this;
+    }
+
+    /**
+    * Draws a circle arc using trigonometric order
+    * @param x X simulation center coord
+    * @param y Y simulation center coord
+    * @param start Starting angle (in radians)
+    * @param start Ending angle (in radians)
+    */
+    arc(x, y, w, h, start, stop) {
+        let v0 = this.plotter.computeForXYZ(x, y);
+        let v1 = this.plotter.computeForXYZ(w, h, 0, false);
+
+        arc(v0.x, v0.y, v1.x, v1.y, -stop, -start);
         return this;
     }
 
@@ -157,34 +192,65 @@ class pSDrawer {
         return this;
     }
 
-
+    /**
+    * Translate drawing coordinates to x,y
+    * @param X simulation coordinate
+    * @param Y simulation coordinate
+    * @return this
+    */
     translate(x, y) {
         let v = this.plotter.computeForXYZ(x, y);
         translate(v.x, v.y);
         return this;
     }
 
+    /**
+    * Begin shape -
+    * Draw shapes using vertices (beginShape() then multiple vertex(x, y) then closeShape())
+    * @param TYPE Shape Type
+    * @return this
+    */
     beginShape(TYPE) {
         beginShape(TYPE);
         return this;
     }
 
+    /**
+    * Close shape -
+    * Draw shapes using vertices (beginShape() then multiple vertex(x, y) then closeShape())
+    * @param TYPE Shape Type (CLOSED to close shape)
+    * @return this
+    */
     endShape(TYPE) {
         endShape(TYPE);
         return this;
     }
 
+    /**
+    * Translate drawing coordinates to x,y
+    * @param X simulation coordinate
+    * @param Y simulation coordinate
+    * @return this
+    */
     vertex(x, y) {
         let v = this.plotter.computeForXYZ(x, y);
         vertex(v.x, v.y);
         return this;
     }
 
+    /**
+    * Pop vertices (use push() then pop())
+    * @return this
+    */
     pop() {
         pop();
         return this;
     }
 
+    /**
+    * Pop vertices (use pop() then push())
+    * @return this
+    */
     push() {
         push();
         return this;
@@ -194,13 +260,19 @@ class pSDrawer {
 
 
 
-    /** Remove stroke of the shape */
+    /**
+    * Remove stroke of the shape
+    * @return this
+    */
     noStroke() {
         noStroke();
         return this;
     }
 
-    /** No fill the shape */
+    /**
+    * No fill the shape
+    * @return this
+    */
     noFill() {
         noFill();
         return this;
