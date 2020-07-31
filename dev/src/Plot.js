@@ -1,15 +1,16 @@
 class Plot {
     constructor() {
-        this.vec = new Vector(2, 2, 0, 'red', 'test');
-
+        this.vec   = new Vector(2, 2, 0, 'red', 'test');
         this.theta = 0;
+
+        _pSimulationInstance.recorder.start(); // starts recording
     }
 
     update(dt) {
         this.vec.x = 2 * Math.cos(this.theta)
         this.vec.y = 2 * Math.sin(this.theta);
 
-        this.theta += 0.01;
+        this.theta += 0.01 * dt * 100;
     }
 
     draw(drawer) {
@@ -20,4 +21,8 @@ class Plot {
 
         this.vec.draw(new Vector(1, 1));
     }
+}
+
+function stopRecord() {
+    _pSimulationInstance.recorder.stop(); // stop recording and exports
 }
