@@ -6,18 +6,20 @@ class pSRecorder {
         this.pixelDatas       = [];
         this.registeringTimes = [];
 
-        this.setup(30, 120, true);
+        this.setup(60, 120, true);
     }
 
     /**
     * Automatically called
     * @param drawingFPS FPS of the final video
+    * @param width Width of the video
+    * @param height Height of the video
     * @param updateFPS  FPS for every calculations done on the update() loop
     * @param frameBlocker true by default : will make sure video is really turning at drawingFPS
     */
-    setup(drawingFPS, updateFPS, frameBlocker) {
-        this.width        = canvas.width;
-        this.height       = canvas.height;
+    setup(drawingFPS, width, height, updateFPS, frameBlocker) {
+        this.width        = width;
+        this.height       = height;
         this.pixelDensity = pixelDensity;
         this.frameBlocker = frameBlocker;
         this.drawingFPS   = drawingFPS;
@@ -30,13 +32,15 @@ class pSRecorder {
 
     /**
     * Start a new recording session
-    * @param drawingFPS FPS of the final video (default 30)
+    * @param drawingFPS FPS of the final video (default 60)
+    * @param width Width of the video (default 1920)
+    * @param height Height of the video (default 1080)
     * @param updateFPS  FPS for every calculations done on the update() loop (default 120)
     * @param frameBlocker will make sure video is really turning at drawingFPS (default true)
     * @param clearPixelArray will clear the last datas of previous recording session (default true)
     */
-    start(drawingFPS = 30, updateFPS = 120, frameBlocker = true, clearPixelArray = true) {
-        this.setup(drawingFPS, updateFPS, frameBlocker);
+    start(drawingFPS = 60, width = 1920, height = 1080, updateFPS = 120, frameBlocker = true, clearPixelArray = true) {
+        this.setup(drawingFPS, width, height, updateFPS, frameBlocker);
 
         if (clearPixelArray) {
             this.pixelDatas       = [];
@@ -47,6 +51,7 @@ class pSRecorder {
         this.registeringTimes.push({ t : Date.now() / 1000, cause : 'start' });
 
         this.running = true;
+        resizeCanvas(width, height);
     }
 
     /**
@@ -86,6 +91,8 @@ class pSRecorder {
             this.pixelDatas       = [];
             this.registeringTimes = [];
         }
+
+        windowResized();
     }
 
     /** Pause the current recording session */

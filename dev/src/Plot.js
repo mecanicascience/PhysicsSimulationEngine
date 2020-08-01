@@ -2,8 +2,6 @@ class Plot {
     constructor() {
         this.vec   = new Vector(2, 2, 0, 'red', 'test');
         this.theta = 0;
-
-        _pSimulationInstance.recorder.start(); // starts recording
     }
 
     update(dt) {
@@ -21,6 +19,10 @@ class Plot {
 
         this.vec.draw(new Vector(1, 1));
     }
+}
+
+function startRecord() {
+    _pSimulationInstance.recorder.start(); // starts recording
 }
 
 function stopRecord() {

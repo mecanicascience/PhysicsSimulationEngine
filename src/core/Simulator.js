@@ -76,6 +76,9 @@ class pSimulator {
             	s.lastUpdateTime = currentTime;
             	s.plotter.update(dt * s.config.engine.runner.simulationSpeed);
 
+                if (s.recorder.running && !s.recorder.pauseMode)
+                    s.recorder.snapshot(dt);
+
                 if(currentTime - s.lastDrawTime >= 1 / s.config.engine.runner.DRAW_FPS) {
                     if(dt <= critiqDt) {
                         s.dtTotal += dt;
@@ -118,6 +121,9 @@ class pSimulator {
 
         // runs every time the window is resized
         window.windowResized = function() {
+            if(_pSimulationInstance.recorder.running && _pSimulationInstance.recorder.frameBlocker)
+                return;
+
             let p = _pSimulationInstance.getCanvasProportions(_pSimulationInstance.config.engine.window.proportions);
             resizeCanvas(p.w, p.h);
         };
