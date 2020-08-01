@@ -16,6 +16,7 @@ import pSPlotter  from './drawer/Plotter';
 
 // ==== Utilities ====
 import Vector     from './utilities/Vector';
+import pSRecorder from './utilities/Recorder';
 
 
 // ========== GLOBAL VARIABLES ==========

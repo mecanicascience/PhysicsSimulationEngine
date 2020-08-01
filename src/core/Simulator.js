@@ -1,6 +1,7 @@
 import pSPlotter  from './../drawer/Plotter';
 import pSDrawer   from './../drawer/Drawer';
 import pS3DDrawer from './../drawer/3DDrawer';
+import pSRecorder from './../utilities/Recorder';
 
 class pSimulator {
     constructor() {
@@ -15,9 +16,9 @@ class pSimulator {
         window.getCustomConfig = this.getCustomConfig;
         window.getEngineConfig = this.getEngineConfig;
 
-        this.dtMoy         = this.config.engine.runner.rollbackControl.minimalUpdateFPS;
-        this.dtTotal       = 0;
-        this.dtCount       = 0;
+        this.dtMoy   = this.config.engine.runner.rollbackControl.minimalUpdateFPS;
+        this.dtTotal = 0;
+        this.dtCount = 0;
     }
 
 
@@ -34,6 +35,8 @@ class pSimulator {
         }
         else
             this.plotter = new pSPlotter(this, new pS3DDrawer());
+
+        this.recorder = new pSRecorder();
 
         this.mousePos = this.plotter.computeForXYFromPixel(mouseX, mouseY);
 
@@ -67,29 +70,60 @@ class pSimulator {
 
             s.mousePos = s.plotter.computeForXYFromPixel(mouseX, mouseY);
 
-            if(dt > critiqDt)
-                dt = s.dtMoy;
-        	s.lastUpdateTime = currentTime;
-        	s.plotter.update(dt * s.config.engine.runner.simulationSpeed);
+            if(!s.recorder.running || (s.recorder.running && !s.recorder.frameBlocker)) {
+                if(dt > critiqDt)
+                    dt = s.dtMoy;
+            	s.lastUpdateTime = currentTime;
+            	s.plotter.update(dt * s.config.engine.runner.simulationSpeed);
 
-            if(currentTime - s.lastDrawTime >= 1 / s.config.engine.runner.DRAW_FPS) {
-                if(dt <= critiqDt) {
-                    s.dtTotal += dt;
-                    s.dtCount += 1;
-                    if(s.dtCount % s.config.engine.runner.rollbackControl.averageTimeSample == 0) {
-                        s.dtMoy   = s.dtTotal / s.dtCount;
-                        s.dtTotal = 0;
-                        s.dtCount = 0;
+                if (s.recorder.running && !s.recorder.pauseMode)
+                    s.recorder.snapshot(dt);
+
+                if(currentTime - s.lastDrawTime >= 1 / s.config.engine.runner.DRAW_FPS) {
+                    if(dt <= critiqDt) {
+                        s.dtTotal += dt;
+                        s.dtCount += 1;
+                        if(s.dtCount % s.config.engine.runner.rollbackControl.averageTimeSample == 0) {
+                            s.dtMoy   = s.dtTotal / s.dtCount;
+                            s.dtTotal = 0;
+                            s.dtCount = 0;
+                        }
                     }
+
+                    s.plotter.draw();
+                    s.lastDrawTime = currentTime;
+                }
+            }
+            else { // Is recording screen in a blocking-time way
+                if(s.recorder.pauseMode)
+                    return;
+
+                dt = 1 / s.recorder.updateFPS;
+                s.recorder.currentRelT += dt;
+
+                let shouldSnap = false;
+                if (s.recorder.currentRelT - s.recorder.lastDrawTime >= 1 / s.recorder.drawingFPS) {
+                    dt = 1 / s.recorder.drawingFPS;
+                    shouldSnap = true;
                 }
 
-                s.plotter.draw();
-                s.lastDrawTime = currentTime;
+
+                s.lastUpdateTime = s.recorder.currentRelT;
+                s.plotter.update(dt);
+
+                if (shouldSnap) {
+                    s.plotter .draw();
+                    s.recorder.snapshot(dt);
+                    s.recorder.lastDrawTime = s.recorder.currentRelT;
+                }
             }
         };
 
         // runs every time the window is resized
         window.windowResized = function() {
+            if(_pSimulationInstance.recorder.running && _pSimulationInstance.recorder.frameBlocker)
+                return;
+
             let p = _pSimulationInstance.getCanvasProportions(_pSimulationInstance.config.engine.window.proportions);
             resizeCanvas(p.w, p.h);
         };
