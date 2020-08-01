@@ -5,7 +5,8 @@
   "main": "./src/app.js",
   "scripts": {
     "build": "webpack --config ./webpack.config.js --env.watchV='false'",
-    "watch": "webpack-dev-server --open --env.watchV='true'"
+    "watch": "webpack-dev-server --open --env.watchV='true'",
+    "docs" : "jsdoc src -r -c jsdoc.config.json -d docs"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
   },
   "homepage": "https://github.com/mecanicascience/SimulationEngine#readme",
   "devDependencies": {
+    "jsdoc": "^3.6.5",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0",
