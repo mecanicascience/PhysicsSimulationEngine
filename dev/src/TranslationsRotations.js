@@ -27,33 +27,33 @@ class TranslationsRotations {
         //     .pop();
         // ;
 
-        stroke(255);
-        push();
-            noFill();
-            translate(width/2, height/2);
-            rect(-10, -10, 20, 20);
-            rotate(-PI/4);
-            rect(-10, -10, 20, 20);
-            push();
-                translate(-40, 0);
-                rect(-10, -10, 20, 20);
-                rotate(-PI/4);
-                rect(-10, -10, 20, 20);
-            pop();
-            translate(40, 0);
-            rect(-10, -10, 20, 20);
-        pop();
+        // stroke(255);
+        // push();
+        //     noFill();
+        //     translate(width/2, height/2);
+        //     rect(-10, -10, 20, 20);
+        //     rotate(-PI/4);
+        //     rect(-10, -10, 20, 20);
+        //     push();
+        //         translate(-40, 0);
+        //         rect(-10, -10, 20, 20);
+        //         rotate(-PI/4);
+        //         rect(-10, -10, 20, 20);
+        //     pop();
+        //     translate(40, 0);
+        //     rect(-10, -10, 20, 20);
+        // pop();
 
 
 
         drawer
             .stroke(255)
-            .scale(0.6)
+            // .scale(0.6)
             .push()
-                .noFill()
-                .rect(-1, -1, 2, 2)
-                .rotate(PI/4)
-                .rect(-1, -1, 2, 2)
+                // .noFill()
+                // .rect(-1, -1, 2, 2)
+                // .rotate(PI/4)
+                // .rect(-1, -1, 2, 2)
                 .push()
                     .translate(-3, 0)
                     .rect(-1, -1, 2, 2)

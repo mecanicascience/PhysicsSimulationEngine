@@ -97,7 +97,7 @@ class pSPlotter {
         // === Push() and pop() effects (only currently works in 2D) ===
         if(!c.is_3D) {
             let stack = this.simulator.plotter.drawer.stack;
-            let currMatrix = null;
+            let currMatrix = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
 
             function recurseStack(s, multMatrix) {
                 if (!(s instanceof Array)) { // Found operation
