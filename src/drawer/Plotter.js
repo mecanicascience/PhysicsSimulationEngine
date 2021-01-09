@@ -92,7 +92,7 @@ class pSPlotter {
     computeForXYZ(xRel, yRel, zRel, useOffset = true) {
         let c = this.simulator.config.engine.plotter;
 
-        // push() and pop() effects (only currently works in 2D)
+        // === Push() and pop() effects (only currently works in 2D) ===
         let d = this.simulator.plotter.drawer;
         let stack = d.stack[d.stack.length - 1];
 
@@ -103,11 +103,16 @@ class pSPlotter {
             yRel = xTmp*Math.sin(stack.r) + yRel*Math.cos(stack.r);
         }
 
+        // Scale
+        xRel *= stack.s;
+        yRel *= stack.s;
+
         // Translations
         xRel += stack.t.x;
         yRel += stack.t.y;
 
 
+        // === Computes coordinates in pixels ===
         if(!useOffset && !c.is_3D && c.squareByX) {
             let v0 = this.computeForXYZ(0, 0, 0);
             let v1 = this.computeForXYZ(xRel, yRel, zRel);

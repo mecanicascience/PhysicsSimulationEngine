@@ -6,7 +6,7 @@ class pSDrawer {
         // Stack for pull and pop commands :
         //   { totalTranslation, totalRotation }
         // Only handles and saves translations and rotations
-        this.stack = [{ t : new Vector(0, 0), r : 0 }];
+        this.stack = [{ t : new Vector(0, 0), r : 0, s : 1 }];
     }
 
 
@@ -267,7 +267,8 @@ class pSDrawer {
     push() {
         this.stack.push({
             t : this.stack[this.stack.length - 1].t.copy(),
-            r : this.stack[this.stack.length - 1].r + 0
+            r : this.stack[this.stack.length - 1].r + 0,
+            s : this.stack[this.stack.length - 1].s + 0
         });
         push();
         return this;
@@ -278,7 +279,6 @@ class pSDrawer {
     * @return this
     */
     pop() {
-        // console.log(this.stack);
         this.stack.pop();
         pop();
         return this;
@@ -302,6 +302,16 @@ class pSDrawer {
     */
     rotate(angle) {
         this.stack[this.stack.length - 1].r += angle;
+        return this;
+    }
+
+    /**
+    * Scales the next shapes to by drawn by a factor
+    * @param fac The factor of the scale
+    * @return this
+    */
+    scale(fac) {
+        this.stack[this.stack.length - 1].s *= fac;
         return this;
     }
 
