@@ -3,15 +3,75 @@ class pSDrawer {
     constructor(plotter) {
         this.plotter = null; // set when loaded in the Plotter class
 
-        // Stack for pull and pop commands :
-        //   { totalTranslation, totalRotation }
-        // Only handles and saves translations and rotations
+        /** Stack for handeling rotations, translations, scales, pull and pop commands
+        * === STRUCTURE ===
+        * [ Level 0
+        *     [ new level x of depth
+        *          { \new level x+1 object for each operation inside a push(), pop() section
+        *              type : 't',   // t : translation / r : rotation / s : scale
+        *              t : { \x : 0, y : 0},
+        *              r : 0,
+        *              s : 1
+        *          }
+        *     ]
+        * }
+        * \Only handles and saves translations and rotations
+        */
         this.stack = [];
-        this.clearStack();
+        this.stackPointer = [];
     }
 
+    /** Clears stack on each update() */
     clearStack() {
-        this.stack = [{ t : new Vector(0, 0), r : 0, s : 1 }];
+        this.stack = [];
+        this.stackPointer = [];
+        this.currentStackLevel = this.stack;
+    }
+
+    /**
+    * Adds a new stack operation to the current stack
+    * @param type t : translation / r : rotation / s : scale
+    * @param t Translation amount (required)
+    * @param r Rotation amount (default 0)
+    * @param s Scale amount (default 1)
+    */
+    pushStackOperation(type, t, r = 0, s = 1) {
+        let m = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+        switch (type) {
+            case 't':
+                m = [[1, 0, t.x], [0, 1, t.y], [0, 0, 1]];
+                break;
+            case 'r':
+                m = [[Math.cos(r), -Math.sin(r), 0], [Math.sin(r), Math.cos(r), 0], [0, 0, 1]];
+                break;
+            case 's':
+                m = [[s, 0, 0], [0, s, 0], [0, 0, 1]];
+                break;
+        }
+        this.getCurrentStackLevel().push({ m });
+    }
+
+    /** Returns the current stack level */
+    getCurrentStackLevel() {
+        let sCurr = this.stack;
+        for (let i = 0; i < this.stackPointer.length; i++)
+            sCurr = sCurr[this.stackPointer[i]];
+        return sCurr;
+    }
+
+    /** Creates and enter in a new stack level */
+    enterStackLevel() {
+        let sCurr = this.getCurrentStackLevel();
+        this.stackPointer.push(sCurr.length);
+        sCurr.push([]);
+    }
+    /** Leaves the current stack level */
+    exitStackLevel() {
+        let sCurr = this.stack;
+        for (let i = 0; i < this.stackPointer.length - 1; i++)
+            sCurr = sCurr[this.stackPointer[i]];
+        this.stackPointer.pop();
+        sCurr.pop();
     }
 
 
@@ -270,11 +330,7 @@ class pSDrawer {
     * @return this
     */
     push() {
-        this.stack.push({
-            t : this.stack[this.stack.length - 1].t.copy(),
-            r : this.stack[this.stack.length - 1].r + 0,
-            s : this.stack[this.stack.length - 1].s + 0
-        });
+        this.enterStackLevel();
         push();
         return this;
     }
@@ -284,7 +340,7 @@ class pSDrawer {
     * @return this
     */
     pop() {
-        this.stack.pop();
+        this.exitStackLevel();
         pop();
         return this;
     }
@@ -296,7 +352,7 @@ class pSDrawer {
     * @return this
     */
     translate(x, y) {
-        this.stack[this.stack.length - 1].t.add(x, y);
+        this.pushStackOperation('t', {x, y}, 0, 1);
         return this;
     }
 
@@ -306,7 +362,7 @@ class pSDrawer {
     * @return this
     */
     rotate(angle) {
-        this.stack[this.stack.length - 1].r += angle;
+        this.pushStackOperation('r', {x : 0, y : 0}, angle, 1);
         return this;
     }
 
@@ -316,7 +372,7 @@ class pSDrawer {
     * @return this
     */
     scale(fac) {
-        this.stack[this.stack.length - 1].s *= fac;
+        this.pushStackOperation('s', {x : 0, y : 0}, 0, fac);
         return this;
     }
 

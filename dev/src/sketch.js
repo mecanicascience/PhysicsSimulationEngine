@@ -4,6 +4,8 @@ function preRunSimulator(simulator) {
 			// engineConf.plotter.is_3D = true;
 		})
 	;
+
+noLoop();
 }
 
 function runSimulator(simulator) {
@@ -16,7 +18,7 @@ function runSimulator(simulator) {
 			};
 			engineConf.plotter.squareByX = true;
 			// engineConf.plotter.displayGrid = true;
-			engineConf.runner.movable    = true;
+			// engineConf.runner.movable    = true;
 		})
 		// .addObjects(Plot, 1)
 		.addObjects(TranslationsRotations, 1)

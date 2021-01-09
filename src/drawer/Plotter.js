@@ -95,23 +95,30 @@ class pSPlotter {
         let c = this.simulator.config.engine.plotter;
 
         // === Push() and pop() effects (only currently works in 2D) ===
-        let d = this.simulator.plotter.drawer;
-        let stack = d.stack[d.stack.length - 1];
+        if(!c.is_3D) {
+            let stack = this.simulator.plotter.drawer.stack;
+            let currMatrix = null;
 
-        // Rotations (only in 2D) => points are currently with 'normal' (0, 0) as origin
-        if (stack.r % 2*Math.PI != 0) {
-            let xTmp = xRel;
-            xRel = xRel*Math.cos(stack.r) - yRel*Math.sin(stack.r);
-            yRel = xTmp*Math.sin(stack.r) + yRel*Math.cos(stack.r);
+            function recurseStack(s, multMatrix) {
+                if (!(s instanceof Array)) { // Found operation
+                    if (currMatrix == null)
+                        currMatrix = s.m;
+                    else {
+                        // s.m * currMatrix
+                        currMatrix = multMatrix(currMatrix, s.m);
+                    }
+                	return;
+                }
+
+                for (let i = 0; i < s.length; i++)
+                    recurseStack(s[i], multMatrix);
+            }
+
+            recurseStack(stack, this.multMatrix);
+            let xRelTmp = xRel;
+            xRel = xRel * currMatrix[0][0] + yRel * currMatrix[0][1] + currMatrix[0][2];
+            yRel = xRelTmp * currMatrix[1][0] + yRel * currMatrix[1][1] + currMatrix[1][2];
         }
-
-        // Scale
-        xRel *= stack.s;
-        yRel *= stack.s;
-
-        // Translations
-        xRel += stack.t.x;
-        yRel += stack.t.y;
 
 
         // === Computes coordinates in pixels ===
@@ -169,6 +176,19 @@ class pSPlotter {
             v.y = -((((y - 2 * height) * 2) / width) * c.scale.y - c.offset.y);
 
         return v;
+    }
+
+    // Returns c = a.b (suppose that a and b are the same size)
+    multMatrix(a, b) {
+        let c = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+        for (let i = 0; i < a.length; i++) {
+            for (let j = 0; j < b.length; j++) {
+                c[i][j] = a[i][0]*b[0][j]
+                        + a[i][1]*b[1][j]
+                        + a[i][2]*b[2][j];
+            }
+        }
+        return c;
     }
 }
 
