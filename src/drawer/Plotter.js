@@ -92,6 +92,22 @@ class pSPlotter {
     computeForXYZ(xRel, yRel, zRel, useOffset = true) {
         let c = this.simulator.config.engine.plotter;
 
+        // push() and pop() effects (only currently works in 2D)
+        let d = this.simulator.plotter.drawer;
+        let stack = d.stack[d.stack.length - 1];
+
+        // Rotations (only in 2D) => points are currently with 'normal' (0, 0) as origin
+        if (stack.r % 2*Math.PI != 0) {
+            let xTmp = xRel;
+            xRel = xRel*Math.cos(stack.r) - yRel*Math.sin(stack.r);
+            yRel = xTmp*Math.sin(stack.r) + yRel*Math.cos(stack.r);
+        }
+
+        // Translations
+        xRel += stack.t.x;
+        yRel += stack.t.y;
+
+
         if(!useOffset && !c.is_3D && c.squareByX) {
             let v0 = this.computeForXYZ(0, 0, 0);
             let v1 = this.computeForXYZ(xRel, yRel, zRel);
@@ -116,7 +132,7 @@ class pSPlotter {
 
             return v;
         }
-        else {
+        else { // 3D
             // 360 x 360 : grid size
             let fac = 180 * 0.28;
             let v = new Vector(

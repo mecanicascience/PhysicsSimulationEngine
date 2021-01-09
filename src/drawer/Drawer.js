@@ -2,6 +2,11 @@ class pSDrawer {
     /** Construct the main pSEngine drawer */
     constructor(plotter) {
         this.plotter = null; // set when loaded in the Plotter class
+
+        // Stack for pull and pop commands :
+        //   { totalTranslation, totalRotation }
+        // Only handles and saves translations and rotations
+        this.stack = [{ t : new Vector(0, 0), r : 0 }];
     }
 
 
@@ -78,7 +83,7 @@ class pSDrawer {
         }
         else
             ellipse(v0.x, v0.y, rx, ry);
-        
+
         return this;
     }
 
@@ -192,17 +197,8 @@ class pSDrawer {
         return this;
     }
 
-    /**
-    * Translate drawing coordinates to x,y
-    * @param X simulation coordinate
-    * @param Y simulation coordinate
-    * @return this
-    */
-    translate(x, y) {
-        let v = this.plotter.computeForXYZ(x, y);
-        translate(v.x, v.y);
-        return this;
-    }
+
+
 
     /**
     * Begin shape -
@@ -216,13 +212,23 @@ class pSDrawer {
     }
 
     /**
-    * Close shape -
-    * Draw shapes using vertices (beginShape() then multiple vertex(x, y) then closeShape())
-    * @param TYPE Shape Type (CLOSED to close shape)
+    * Bezier Curve
+    * @param x1
+    * @param y1
+    * @param x2
+    * @param y2
+    * @param x3
+    * @param y3
+    * @param x4
+    * @param y4
     * @return this
     */
-    endShape(TYPE) {
-        endShape(TYPE);
+    bezier(x1, y1, x2, y2, x3, y3, x4, y4) {
+		let p1 = _pSimulationInstance.plotter.computeForXYZ(x1, y1);
+		let p2 = _pSimulationInstance.plotter.computeForXYZ(x2, y2);
+		let p3 = _pSimulationInstance.plotter.computeForXYZ(x3, y3);
+		let p4 = _pSimulationInstance.plotter.computeForXYZ(x4, y4);
+        bezier(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y);
         return this;
     }
 
@@ -239,20 +245,63 @@ class pSDrawer {
     }
 
     /**
+    * Close shape -
+    * Draw shapes using vertices (beginShape() then multiple vertex(x, y) then closeShape())
+    * @param TYPE Shape Type (CLOSED to close shape)
+    * @return this
+    */
+    endShape(TYPE) {
+        endShape(TYPE);
+        return this;
+    }
+
+
+
+
+
+
+    /**
+    * Push vertices (use push() then pop())
+    * @return this
+    */
+    push() {
+        this.stack.push({
+            t : this.stack[this.stack.length - 1].t.copy(),
+            r : this.stack[this.stack.length - 1].r + 0
+        });
+        push();
+        return this;
+    }
+
+    /**
     * Pop vertices (use push() then pop())
     * @return this
     */
     pop() {
+        // console.log(this.stack);
+        this.stack.pop();
         pop();
         return this;
     }
 
     /**
-    * Pop vertices (use pop() then push())
+    * Translate drawing coordinates from x,y
+    * @param X simulation coordinate
+    * @param Y simulation coordinate
     * @return this
     */
-    push() {
-        push();
+    translate(x, y) {
+        this.stack[this.stack.length - 1].t.add(x, y);
+        return this;
+    }
+
+    /**
+    * Rotate drawing coordinates
+    * @param angle The rotation angle in radians
+    * @return this
+    */
+    rotate(angle) {
+        this.stack[this.stack.length - 1].r += angle;
         return this;
     }
 

@@ -15,9 +15,10 @@ function runSimulator(simulator) {
 				z : 5
 			};
 			engineConf.plotter.squareByX = true;
-			engineConf.plotter.displayGrid = true;
+			// engineConf.plotter.displayGrid = true;
 			engineConf.runner.movable    = true;
 		})
-		.addObjects(Plot, 1)
+		// .addObjects(Plot, 1)
+		.addObjects(TranslationsRotations, 1)
 	;
 }
