@@ -6,6 +6,11 @@ class pSDrawer {
         // Stack for pull and pop commands :
         //   { totalTranslation, totalRotation }
         // Only handles and saves translations and rotations
+        this.stack = [];
+        this.clearStack();
+    }
+
+    clearStack() {
         this.stack = [{ t : new Vector(0, 0), r : 0, s : 1 }];
     }
 

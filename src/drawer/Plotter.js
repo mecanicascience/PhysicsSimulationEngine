@@ -18,6 +18,8 @@ class pSPlotter {
     * @param dt Delta time since last update (in seconds)
     */
     update(dt) {
+        this.drawer.clearStack(); // Clears drawer r, t, s queue
+
         if(this.simulator.config.engine.plotter.is_3D) {
             lights();
             orbitControl(5, 5);
