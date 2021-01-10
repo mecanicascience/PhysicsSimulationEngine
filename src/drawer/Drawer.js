@@ -140,11 +140,7 @@ class pSDrawer {
 
         if(!abs) {
             let v1 = this.plotter.computeForXYZ(rx, ry, 0, false);
-
-            push();
-                this.translate(x, y);
-                ellipse(0, 0, v1.x * 2, v1.y * 2);
-            pop();
+            this.ellipse(x, y, v1.x * 2, v1.y * 2, true);
         }
         else
             ellipse(v0.x, v0.y, rx, ry);

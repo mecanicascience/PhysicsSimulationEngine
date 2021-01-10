@@ -8,6 +8,11 @@ class TranslationsRotations {
     }
 
     draw(drawer) {
+        drawer
+            .fill(255)
+            .stroke(255)
+            .ellipse(0, 0, 1, 1);
+
         // drawer
         //     .stroke(255, 255, 255, 0.7)
         //     .fill  (255, 255, 255, 0.5)
@@ -46,22 +51,22 @@ class TranslationsRotations {
 
 
 
-        drawer
-            .stroke(255)
-            // .scale(0.6)
-            .push()
-                // .noFill()
-                // .rect(-1, -1, 2, 2)
-                // .rotate(PI/4)
-                // .rect(-1, -1, 2, 2)
-                .push()
-                    .translate(-3, 0)
-                    .rect(-1, -1, 2, 2)
-                    .rotate(PI/4)
-                    .rect(-1, -1, 2, 2)
-                .pop()
-                .translate(3, 0)
-                .rect(-1, -1, 2, 2)
-            .pop();
+        // drawer
+        //     .stroke(255)
+        //     // .scale(0.6)
+        //     .push()
+        //         // .noFill()
+        //         // .rect(-1, -1, 2, 2)
+        //         // .rotate(PI/4)
+        //         // .rect(-1, -1, 2, 2)
+        //         .push()
+        //             .translate(-3, 0)
+        //             .rect(-1, -1, 2, 2)
+        //             .rotate(PI/4)
+        //             .rect(-1, -1, 2, 2)
+        //         .pop()
+        //         .translate(3, 0)
+        //         .rect(-1, -1, 2, 2)
+        //     .pop();
     }
 }
