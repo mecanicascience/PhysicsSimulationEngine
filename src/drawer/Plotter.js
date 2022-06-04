@@ -170,8 +170,8 @@ class pSPlotter {
         let c = _pSimulationInstance.config.engine.plotter;
         let v = new Vector(((x * 2) / width - 1) * c.scale.x + c.offset.x);
 
-        if(c.squareByX)
-            v.y = -(((y * 2) / height - 1)           * c.scale.y - c.offset.y);
+        if (c.squareByX)
+            v.y = -((y - height / 2) / width * 2) * c.scale.x + c.offset.y;
         else
             v.y = -((((y - 2 * height) * 2) / width) * c.scale.y - c.offset.y);
 
